@@ -9,5 +9,5 @@ if [ $? -eq 0 ]; then
 else
     # install JDK 16 (for 1.17)
     echo "Java isn't installed. Start installing..."
-    sudo apt-get isntall openjdk-16-jre 
+    sudo apt-get isntall openjdk-16-jdk -y
 fi
