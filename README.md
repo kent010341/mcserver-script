@@ -11,12 +11,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 cp ./basic/start-server.sh ~/mcserver/server/start-server.sh
 ```
 
-3. Grant the execute permission to this script file. e.g.,  
-```
-chmod +x ./start-server.sh
-```
-
-4. Execute it. e.g.,
+3. Execute it. e.g.,
 ```
 ./start-server.sh
 ```
