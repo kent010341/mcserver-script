@@ -1,5 +1,7 @@
 # Script for Minecraft Server
 
+> 想看中文版說明文件？切換分支到zh-TW吧！
+
 ## How to use?
 ### .sh files
 1. Clone this repository to anywhere you want (git is required):  
@@ -50,7 +52,7 @@ This script will check if you have already installed Java. If not, it will autom
 ./start-server.sh [memory] [server.jar filename]
 ```  
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
-> if you want to edit the default memory used, change the value of variable **default_memory** at line 4.
+> To edit the default memory used, change the value of variable **default_memory** at line 4.
 
 * backup.sh
 ```
@@ -66,7 +68,8 @@ Proceed a backup process.
 ./screen-start-server.sh [memory] [server.jar filename]
 ```
 Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
-> if you want to edit the default memory used, change the value of variable **default_memory** at line 4.
+> To edit the default memory used, change the value of variable **default_memory** at line 4.  
+> To get into the detached screen, use command 'screen -r mc' and use Ctrl + A + D to leave it.
 
 * screen-backup.sh
 ```
