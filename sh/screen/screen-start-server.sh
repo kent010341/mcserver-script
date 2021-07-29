@@ -34,3 +34,6 @@ fi
 
 # start server with screen
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
+
+echo -e "\033[33mServer has already started at a detached screen 'mc'. \033[0m"
+echo -e "\033[33mUse 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"

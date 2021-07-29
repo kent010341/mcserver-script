@@ -4,7 +4,7 @@
 if [ screen -list | grep -q "mc" ]; then
     sudo screen -r mc -X stuff '/stop\n'
 else
-    echo "screen session 'mc' doesn't exist."
+    echo -e "\033[31m[ERROR] screen session 'mc' doesn't exist. \033[0m"
     exit 1
 fi
 
@@ -12,14 +12,14 @@ fi
 if [ ! -d "./backup" ]; then
     echo "The 'backup' folder doesn't exist."
     mkdir backup
-    ecdir "'backup' folder created."
+    echo "'backup' folder created."
 fi
 
 if [ -d "./world" ]; then
     cp -r ./world ./backup/world$(date +"%Y%m%d")
-    echo "backup successed."
+    echo -e "\033[33mBackup successed. \033[0m"
 else
-    echo "The 'world' folder doesn't exist."
+    echo -e "\033[31m[ERROR] The 'world' folder doesn't exist. \033[0m"
     exit 1
 fi
 
@@ -42,3 +42,6 @@ filename=${2:-$default_filename}
 
 # start server with screen
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
+
+echo -e "\033[33mServer has already started at a detached screen 'mc'. \033[0m"
+echo -e "\033[33mUse 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"
