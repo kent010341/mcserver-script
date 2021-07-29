@@ -66,4 +66,3 @@ After backup, the server will automatically restart.
 > Create a folder called 'backup' if not exist.  
 > This script will copy the 'world' folder into the 'backup' folder, and rename it with current date.  
 
-### sh/combination/
