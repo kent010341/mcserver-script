@@ -4,7 +4,7 @@
 if [ ! -d "./backup" ]; then
     echo -e "\033[31m[WARNING] The folder 'backup' doesn't exist. \033[0m"
     mkdir backup
-    ecdir "Folder 'backup' created."
+    echo "Folder 'backup' created."
 fi
 
 if [ -d "./world" ]; then
