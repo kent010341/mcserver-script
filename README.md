@@ -67,6 +67,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 ```
 以一個分離(detached)的screen session (名稱：mc)啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
 > 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
+> 如果你想操作分離的screen session，使用命令「screen -r mc」進入，要離開的話按下Ctrl + A + D即可。
 
 * screen-backup.sh
 ```
