@@ -1,6 +1,7 @@
 # Script for Minecraft Server
 
 ## How to use?
+### .sh files
 1. Clone this repository to anywhere you want (git is required):  
 ```
 git clone https://github.com/kent010341/mcserver-script.git
@@ -15,6 +16,16 @@ cp ./basic/start-server.sh ~/mcserver/server/start-server.sh
 ```
 ./start-server.sh
 ```
+
+### .bat files
+1. Clone this repository to anywhere you want (git is required):  
+```
+git clone https://github.com/kent010341/mcserver-script.git
+```
+
+2. Copy (or move) the script you want to your server folder.
+
+3. Double click to execute it.
 
 ---
 
@@ -66,3 +77,10 @@ After backup, the server will automatically restart.
 > Create a folder called 'backup' if not exist.  
 > This script will copy the 'world' folder into the 'backup' folder, and rename it with current date.  
 
+### bat/start-server.bat
+Start server.
+
+### bat/backup-server.bat
+Proceed a backup process.  
+> Create a folder called 'backup' if not exist.  
+> This script will copy the 'world' folder into the 'backup' folder, and rename it with current date. 
