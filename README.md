@@ -1,7 +1,5 @@
 # Script for Minecraft Server
 
-> 想看中文版說明文件？[切換分支到zh-TW吧](https://github.com/kent010341/mcserver-script/tree/zh-TW)！
-
 ## How to use?
 ### .sh files (for Unix OS)
 1. Clone this repository to anywhere you want (git is required):  
