@@ -1,7 +1,5 @@
 # Script for Minecraft Server
 
-> 想看中文版說明文件？[切換分支到zh-TW吧](https://github.com/kent010341/mcserver-script/tree/zh-TW)！
-
 ## How to use?
 ### .sh files (for Unix OS)
 1. Clone this repository to anywhere you want (git is required):  
@@ -44,7 +42,7 @@ Defaultly use 'latest' as version. ('latest' is manually edit.)
 ```
 ./install-requirements.sh [--noscreen]
 ```
-Check if Java and screen are installed. Add `--noscreen` to ignore checking screen.  
+Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` to ignore checking screen.  
 By default, this script will install OpenJDK 16.
 
 ### sh/basic/
