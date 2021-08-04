@@ -1,12 +1,18 @@
 #!/bin/sh
 
-# stop server
-if [ screen -list | grep -q "mc" ]; then
-    sudo screen -r mc -X stuff '/stop\n'
-else
+# test screen session "mc" exist
+screen -r mc -X stuff "/say Server will be closed in 10 seconds. Restart after the backup process completed (usually less than 1 minute).\n"
+
+# if the command above execute failed, send error message and quit
+if [ ! $? -eq 0 ]; then
     echo -e "\033[31m[ERROR] screen session 'mc' doesn't exist. \033[0m"
     exit 1
 fi
+
+sleep 10s
+
+# stop server
+screen -r mc -X stuff '/stop\n'
 
 # generating the backup folder
 if [ ! -d "./backup" ]; then
