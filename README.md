@@ -42,7 +42,7 @@ Defaultly use 'latest' as version. ('latest' is manually edit.)
 ```
 ./install-requirements.sh [--noscreen]
 ```
-Check if Java and screen are installed. Add `--noscreen` to ignore checking screen.  
+Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` to ignore checking screen.  
 By default, this script will install OpenJDK 16.
 
 ### sh/basic/
