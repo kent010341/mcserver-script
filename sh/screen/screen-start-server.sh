@@ -11,7 +11,7 @@ screen -version
 # if the command above execute failed, install screen
 if [ ! $? -eq 0 ]; then
     echo -e "\033[31m[WARNING] screen isn't installed. Start installing... \033[0m"
-    sudo apt-get isntall screen -y 
+    sudo apt-get install screen -y 
 fi
 
 #======================================================

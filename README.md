@@ -3,7 +3,7 @@
 > 想看中文版說明文件？[切換分支到zh-TW吧](https://github.com/kent010341/mcserver-script/tree/zh-TW)！
 
 ## How to use?
-### .sh files
+### .sh files (for Unix OS)
 1. Clone this repository to anywhere you want (git is required):  
 ```
 git clone https://github.com/kent010341/mcserver-script.git
@@ -19,7 +19,7 @@ cp ./basic/start-server.sh ~/mcserver/server/start-server.sh
 ./start-server.sh
 ```
 
-### .bat files
+### .bat files (for Windows OS)
 1. Clone this repository to anywhere you want (git is required):  
 ```
 git clone https://github.com/kent010341/mcserver-script.git
@@ -40,13 +40,14 @@ git clone https://github.com/kent010341/mcserver-script.git
 Get server.jar by version. Currently support 1.13.2, 1.14.4, 1.15.2, 1.16.5, 1.17, 1.17.1.  
 Defaultly use 'latest' as version. ('latest' is manually edit.)
 
-### sh/basic/
-* check-java.sh  
+* install-requirements.sh
 ```
-./check-java.sh
-```  
-This script will check if you have already installed Java. If not, it will automatically install the OpenJDK 16.
+./install-requirements.sh [--noscreen]
+```
+Check if Java and screen are installed. Add `--noscreen` to ignore checking screen.  
+By default, this script will install OpenJDK 16.
 
+### sh/basic/
 * start-server.sh
 ```
 ./start-server.sh [memory] [server.jar filename]
