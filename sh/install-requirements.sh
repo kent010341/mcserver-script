@@ -13,7 +13,6 @@ else
 fi
 
 if [ $1 == '--noscreen' ]; then
-    echo "\033[33mscreen is installed. \033[0m"
     exit 1
 else
     # check screen installed
@@ -23,5 +22,7 @@ else
     if [ ! $? -eq 0 ]; then
         echo "\033[31m[WARNING] screen isn't installed. Start installing... \033[0m"
         sudo apt-get install screen -y 
+    else
+        echo "\033[33mscreen is installed. \033[0m"
     fi   
 fi
