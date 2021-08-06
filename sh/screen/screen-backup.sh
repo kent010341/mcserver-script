@@ -9,21 +9,24 @@ if [ ! $? -eq 0 ]; then
     exit 1
 fi
 
+echo "\033[36m[INFO] Warning players in game that server will be closed in 10 seconds... \033[0m"
+echo "\033[36m[INFO] Press Ctrl + C to interrupt the process. \033[0m"
 sleep 10s
 
 # stop server
 screen -r mc -X stuff '/stop\n'
+echo "\033[36m[INFO] Server stopped. \033[0m"
 
 # generating the backup folder
 if [ ! -d "./backup" ]; then
-    echo "The 'backup' folder doesn't exist."
+    echo "\033[31m[WARNING] The folder 'backup' doesn't exist. \033[0m"
     mkdir backup
-    echo "'backup' folder created."
+    echo "\033[33m[SUCCESS] Folder 'backup' created. \033[0m"
 fi
 
 if [ -d "./world" ]; then
     cp -r ./world ./backup/world$(date +"%Y%m%d")
-    echo "\033[33mBackup successed. \033[0m"
+    echo "\033[33m[SUCCESS] Backup successed. \033[0m"
 else
     echo "\033[31m[ERROR] The 'world' folder doesn't exist. \033[0m"
     exit 1

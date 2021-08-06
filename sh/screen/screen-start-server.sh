@@ -12,6 +12,7 @@ screen -version
 if [ ! $? -eq 0 ]; then
     echo "\033[31m[WARNING] screen isn't installed. Start installing... \033[0m"
     sudo apt-get install screen -y 
+    echo "\033[33m[SUCCESS] screen installed. \033[0m"
 fi
 
 #======================================================
