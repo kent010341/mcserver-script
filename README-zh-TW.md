@@ -45,6 +45,20 @@ git clone https://github.com/kent010341/mcserver-script.git
 確認Java與screen是否安裝，若未安裝則自動進行安裝。在指令末端加上`--noscreen`來跳過確認screen的步驟。  
 此腳本預設安裝OpenJDK 16。
 
+* fast-build.sh
+```
+./fast-build.sh
+```
+執行以下步驟： 
+1. 確認Java安裝
+2. 確認screen安裝
+3. 下載server.jar
+4. 建立一個分離(detached)的screen session (名稱：mc)
+5. 建立eula.txt
+6. 在screen session mc中啟動Minecraft伺服器
+
+> 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)
+
 ### sh/basic/ 
 * start-server.sh
 ```
