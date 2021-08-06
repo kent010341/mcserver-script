@@ -32,7 +32,7 @@ echo -e "\033[36m[INFO] Checking screen... \033[0m"
 screen -version
 
 # if the command above execute failed, install screen
-if [ $? -eq 0 ]; then
+if [ $? -eq 1 ]; then
     echo -e "\033[36m[INFO] screen is installed. \033[0m"
 else
     echo -e "\033[36m[INFO] screen isn't installed. Start installing... \033[0m"
