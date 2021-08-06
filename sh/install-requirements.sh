@@ -9,7 +9,7 @@ if [ $? -eq 0 ]; then
 else
     # install JDK 16 (for 1.17)
     echo "Java isn't installed. Start installing..."
-    echo sudo apt-get install openjdk-16-jdk -y
+    sudo apt-get install openjdk-16-jdk -y
 fi
 
 if [ $1 == '--noscreen' ]; then
