@@ -45,6 +45,20 @@ Defaultly use 'latest' as version. ('latest' is manually edit.)
 Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` to ignore checking screen.  
 By default, this script will install OpenJDK 16.
 
+* fast-build.sh
+```
+./fast-build.sh
+```
+Process steps:  
+1. Check Java installation
+2. Check screen installation
+3. Download server.jar
+4. Create a detached screen session called 'mc'
+5. Create eula.txt
+6. Start Minecraft server in detached screen sesson 'mc'
+
+> Change default value (memory, server.jar filename, version) at line 4 ~ 6.
+
 ### sh/basic/
 * start-server.sh
 ```
