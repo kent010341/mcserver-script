@@ -5,7 +5,7 @@ latest="1.17.1"
 version=${1:-$default}
 
 if [ $version == "latest" ]; then
-    echo "\033[33m[INFO] Latest version is 1.17.1 \033[0m"
+    echo "\033[36m[INFO] Latest version is 1.17.1 \033[0m"
     version=$latest
 fi
 

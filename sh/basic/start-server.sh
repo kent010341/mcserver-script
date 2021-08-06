@@ -10,5 +10,8 @@ mb=$(expr $gb \* 1024)M
 default_filename=server.jar
 filename=${2:-$default_filename}
 
+echo "\033[36m[INFO] Starting server with memory $gb GB... \033[0m"
+sleep 1s
+
 # start server
 java -Xmx$mb -Xms$mb -jar $filename nogui
