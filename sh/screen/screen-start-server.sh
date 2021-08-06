@@ -9,7 +9,7 @@ default_filename=server.jar
 screen -version
 
 # if the command above execute failed, install screen
-if [ ! $? -eq 0 ]; then
+if [ ! $? -eq 1 ]; then
     echo -e "\033[31m[WARNING] screen isn't installed. Start installing... \033[0m"
     sudo apt-get install screen -y 
     echo -e "\033[33m[SUCCESS] screen installed. \033[0m"
