@@ -9,7 +9,7 @@ if [ $version == "latest" ]; then
     version=$latest
 fi
 
-echo "Prepare to download minecraft server (version $version)"
+echo "\033[36m[INFO] Prepare to download minecraft server (version $version) \033[0m"
 
 if [ $version == "1.17.1" ]; then
     url="https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar"
@@ -24,9 +24,10 @@ elif [ $version == "1.14.4" ]; then
 elif [ $version == "1.13.2" ]; then
     url="https://launcher.mojang.com/v1/objects/3737db93722a9e39eeada7c27e7aca28b144ffa7/server.jar"
 else
-    echo "Unsupported version."
+    echo "\033[31m[ERROR] Unsupported version. \033[0m"
     exit 1
 fi
 
 # download
 wget -O ./server.jar $url
+echo "\033[33m[SUCCESS] server.jar already downloaded. \033[0m"
