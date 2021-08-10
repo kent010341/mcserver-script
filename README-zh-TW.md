@@ -90,7 +90,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 ```
 停止名為mc的分離(detached)screen session中的伺服器，並執行備份。  
 備份完成後會重啟伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱來重啟伺服器。  
-> * 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第30行)。 
+> * 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第39行)。 
 > * 如果沒有「backup」資料夾會自動建立。  
 > * 這個腳本會複製world資料夾到backup資料夾內，並以當前日期重新命名。  
 
