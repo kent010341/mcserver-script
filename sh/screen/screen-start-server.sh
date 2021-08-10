@@ -10,9 +10,9 @@ screen -version
 
 # if the command above execute failed, install screen
 if [ ! $? -eq 1 ]; then
-    echo -e "\033[31m[WARNING] screen isn't installed. Start installing... \033[0m"
+    echo -e "\033[1;91m[WARNING] screen isn't installed. Start installing... \033[0m"
     sudo apt-get install screen -y 
-    echo -e "\033[33m[SUCCESS] screen installed. \033[0m"
+    echo -e "\033[1;93m[SUCCESS] screen installed. \033[0m"
 fi
 
 #======================================================
@@ -36,5 +36,5 @@ fi
 # start server with screen
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
 
-echo -e "\033[33mServer has already started at a detached screen 'mc'. \033[0m"
-echo -e "\033[33mUse 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"
+echo -e "\033[1;93m[SUCCESS] Server has already started at a detached screen 'mc'. \033[0m"
+echo -e "\033[1;93m[SUCCESS] Use 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"

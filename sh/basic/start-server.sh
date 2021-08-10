@@ -10,7 +10,7 @@ mb=$(expr $gb \* 1024)M
 default_filename=server.jar
 filename=${2:-$default_filename}
 
-echo -e "\033[36m[INFO] Starting server with memory $gb GB... \033[0m"
+echo -e "\033[1;96m[INFO] Starting server with memory $gb GB... \033[0m"
 sleep 1s
 
 # start server

@@ -5,30 +5,30 @@ screen -r mc -X stuff "/say Server will be closed in 10 seconds. Restart after t
 
 # if the command above execute failed, send error message and quit
 if [ ! $? -eq 0 ]; then
-    echo -e "\033[31m[ERROR] screen session 'mc' doesn't exist. \033[0m"
+    echo -e "\033[1;91m[ERROR] screen session 'mc' doesn't exist. \033[0m"
     exit 1
 fi
 
-echo -e "\033[36m[INFO] Warning players in game that server will be closed in 10 seconds... \033[0m"
-echo -e "\033[36m[INFO] Press Ctrl + C to interrupt the process. \033[0m"
+echo -e "\033[1;96m[INFO] Warning players in game that server will be closed in 10 seconds... \033[0m"
+echo -e "\033[1;96m[INFO] Press Ctrl + C to interrupt the process. \033[0m"
 sleep 10s
 
 # stop server
 screen -r mc -X stuff '/stop\n'
-echo -e "\033[36m[INFO] Server stopped. \033[0m"
+echo -e "\033[1;96m[INFO] Server stopped. \033[0m"
 
 # generating the backup folder
 if [ ! -d "./backup" ]; then
-    echo -e "\033[31m[WARNING] The folder 'backup' doesn't exist. \033[0m"
+    echo -e "\033[1;91m[WARNING] The folder 'backup' doesn't exist. \033[0m"
     mkdir backup
-    echo -e "\033[33m[SUCCESS] Folder 'backup' created. \033[0m"
+    echo -e "\033[1;93m[SUCCESS] Folder 'backup' created. \033[0m"
 fi
 
 if [ -d "./world" ]; then
     cp -r ./world ./backup/world$(date +"%Y%m%d")
-    echo -e "\033[33m[SUCCESS] Backup successed. \033[0m"
+    echo -e "\033[1;93m[SUCCESS] Backup successed. \033[0m"
 else
-    echo -e "\033[31m[ERROR] The 'world' folder doesn't exist. \033[0m"
+    echo -e "\033[1;91m[ERROR] The 'world' folder doesn't exist. \033[0m"
     exit 1
 fi
 
@@ -52,5 +52,5 @@ filename=${2:-$default_filename}
 # start server with screen
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
 
-echo -e "\033[33mServer has already started at a detached screen 'mc'. \033[0m"
-echo -e "\033[33mUse 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"
+echo -e "\033[1;93m[SUCCESS] Server has already started at a detached screen 'mc'. \033[0m"
+echo -e "\033[1;93m[SUCCESS] Use 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"
