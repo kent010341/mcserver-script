@@ -90,7 +90,7 @@ Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'serve
 ```
 Stop the server inside the detached screen 'mc' and proceed a backup process.   
 After backup, the server will automatically restart. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar to start the server. 
-> * To edit the default memory used, change the value of variable **default_memory** at line 30.  
+> * To edit the default memory used, change the value of variable **default_memory** at line 39.  
 > * Create a folder called 'backup' if not exist.  
 > * This script will copy the 'world' folder into the 'backup' folder, and rename it with current date.  
 
