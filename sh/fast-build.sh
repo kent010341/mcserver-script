@@ -50,7 +50,7 @@ fi
 echo -e "\033[1;96m[INFO] Prepare to download minecraft server (version $default_version) \033[0m"
 
 ersion_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
-version_hash_key=$(curl $version_file_url | grep "$default_version=" | cut -d">" -f 2)
+version_hash_key=$(curl --silent $version_file_url | grep "$default_version=" | cut -d">" -f 2)
 
 if [ "$version_hash_key" == "" ]; then
     echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
