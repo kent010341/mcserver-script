@@ -59,6 +59,15 @@ Process steps:
 
 > Change default value (memory, server.jar filename, version) at line 4 ~ 6.
 
+* replace-variables.sh
+```
+./replace-variables.sh
+```
+Change all relative variables in this repository.  
+Edit the value of `default_memory`, `default_filename`, `default_version` to make the change.
+
+> `"default"` won't change anything.
+
 ### sh/basic/
 * start-server.sh
 ```
