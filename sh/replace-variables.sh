@@ -19,7 +19,9 @@ function replace_file() {
     mv "$file_dir.tmp" "$file_dir"
     chmod +x "$file_dir"
 
-    echo -e "\033[1;93m[SUCCESS] $file_dir rewritten. \033[0m"
+    if [ ! "file_dir" == "replace-variables.sh" ]; then
+        echo -e "\033[1;93m[SUCCESS] $file_dir rewritten. \033[0m"
+    fi
 }
 
 # ==========================================================
