@@ -2,7 +2,8 @@
 
 # ==========================================================
 # Variables
-default_memory=3
+default_memory="default"
+default_filename="default"
 
 # ==========================================================
 
@@ -35,4 +36,20 @@ if [ ! "$default_memory" == "default" ]; then
 
     # screen/screen-backup.sh
     replace_file "default_memory=.*" "default_memory=$default_memory" 39 "screen/screen-backup.sh"
+fi
+
+# default_filename
+if [ ! "$default_filename" == "default" ]; then
+    echo -e "\033[1;96m[INFO] Rewriting default_filename... \033[0m"
+    # fast-build.sh
+    replace_file "default_filename=.*" "default_filename=$default_filename" 5 "fast-build.sh"
+
+    # basic/start-server.sh
+    replace_file "default_filename=.*" "default_filename=$default_filename" 10 "basic/start-server.sh"
+
+    # screen/screen-start-server.sh
+    replace_file "default_filename=.*" "default_filename=$default_filename" 5 "screen/screen-start-server.sh"
+
+    # screen/screen-backup.sh
+    replace_file "default_filename=.*" "default_filename=$default_filename" 40 "screen/screen-backup.sh"
 fi
