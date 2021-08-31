@@ -59,6 +59,15 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 > 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)
 
+* replace-variables.sh
+```
+./replace-variables.sh
+```
+變更所有檔案中的相關變數。    
+手動修改`default_memory`、`default_filename`、`default_version`的數值來使所有檔案變更。
+
+> `"default"`不會變更任何檔案。
+
 ### sh/basic/ 
 * start-server.sh
 ```
