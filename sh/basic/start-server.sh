@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# defaultly using 2GB memory for server
-# defaultly using server.jar as file name
+# defaultly value
 default_memory=2
 default_filename=server.jar
 
