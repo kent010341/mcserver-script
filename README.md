@@ -71,7 +71,9 @@ Edit the value of `default_memory`, `default_filename`, `default_version` to mak
 ### sh/basic/
 * start-server.sh
 ```
-./start-server.sh [memory] [server.jar filename]
+./start-server.sh [options]
+    --memeory <memory>    RAM used for the server (in GB)
+    --filename <file name>    The file name of server.jar
 ```  
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > To edit the default memory used, change the value of variable **default_memory** at line 4.
