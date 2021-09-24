@@ -1,5 +1,38 @@
 #!/bin/bash
 
+# default value
+default_memory=2 # GB
+default_filename=server.jar
+
+#======================================================
+# parameter parsing
+while (($#)); do
+    case $1 in
+        "--memory")
+            shift
+            default_memory=$1
+            shift
+        ;;
+        "--filename")
+            shift
+            default_filename=$1
+            shift
+        ;;
+        "--help")
+            echo "Usage: ./screen-backup.sh [options...]"
+            echo "    --memeory <memory>    RAM used for the server (in GB)"
+            echo "    --filename <file name>    The file name of server.jar"
+            exit 1
+        ;;
+        *)
+            echo "unknown argument '$1'"
+            echo "Use --help to get the usage information."
+            exit 1
+        ;;
+    esac
+done
+
+#======================================================
 # test screen session "mc" exist
 screen -r mc -X stuff "/say Server will be closed in 10 seconds. Restart after the backup process completed (usually less than 1 minute).\n"
 
@@ -33,21 +66,14 @@ else
 fi
 
 #======================================================
-# restart server (same as screen-start-server.sh)
-
-# default value
-default_memory=2 # GB
-default_filename=server.jar
-
-#======================================================
 # preparing variables & start server
 
 # defaultly using 2GB memory for server
-gb=${1:-$default_memory}
+gb=$default_memory
 mb=$(expr $gb \* 1024)M
 
 # defaultly using server.jar as file name
-filename=${2:-$default_filename}
+filename=$default_filename
 
 # start server with screen
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"

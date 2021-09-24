@@ -71,7 +71,9 @@ Edit the value of `default_memory`, `default_filename`, `default_version` to mak
 ### sh/basic/
 * start-server.sh
 ```
-./start-server.sh [memory] [server.jar filename]
+./start-server.sh [options]
+    --memeory <memory>    RAM used for the server (in GB)
+    --filename <file name>    The file name of server.jar
 ```  
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > To edit the default memory used, change the value of variable **default_memory** at line 4.
@@ -87,7 +89,9 @@ Proceed a backup process.
 ### sh/screen/
 * screen-start-server.sh
 ```
-./screen-start-server.sh [memory] [server.jar filename]
+./screen-start-server.sh [options]
+    --memeory <memory>    RAM used for the server (in GB)
+    --filename <file name>    The file name of server.jar
 ```
 Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > * To edit the default memory used, change the value of variable **default_memory** at line 4.  
@@ -95,11 +99,13 @@ Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'serve
 
 * screen-backup.sh
 ```
-./screen-backup.sh [memory] [server.jar filename]
+./screen-backup.sh [options]
+    --memeory <memory>    RAM used for the server (in GB)
+    --filename <file name>    The file name of server.jar
 ```
 Stop the server inside the detached screen 'mc' and proceed a backup process.   
 After backup, the server will automatically restart. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar to start the server. 
-> * To edit the default memory used, change the value of variable **default_memory** at line 39.  
+> * To edit the default memory used, change the value of variable **default_memory** at line 4.  
 > * Create a folder called 'backup' if not exist.  
 > * This script will copy the 'world' folder into the 'backup' folder, and rename it with current date.  
 

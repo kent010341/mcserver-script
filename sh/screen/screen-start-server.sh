@@ -5,6 +5,34 @@ default_memory=2 # GB
 default_filename=server.jar
 
 #======================================================
+# parameter parsing
+while (($#)); do
+    case $1 in
+        "--memory")
+            shift
+            default_memory=$1
+            shift
+        ;;
+        "--filename")
+            shift
+            default_filename=$1
+            shift
+        ;;
+        "--help")
+            echo "Usage: ./screen-start-server.sh [options...]"
+            echo "    --memeory <memory>    RAM used for the server (in GB)"
+            echo "    --filename <file name>    The file name of server.jar"
+            exit 1
+        ;;
+        *)
+            echo "unknown argument '$1'"
+            echo "Use --help to get the usage information."
+            exit 1
+        ;;
+    esac
+done
+
+#======================================================
 # check screen installed
 screen -version
 
@@ -19,11 +47,11 @@ fi
 # preparing variables & start server
 
 # defaultly using 2GB memory for server
-gb=${1:-$default_memory}
+gb=$default_memory
 mb=$(expr $gb \* 1024)M
 
 # defaultly using server.jar as file name
-filename=${2:-$default_filename}
+filename=$default_filename
 
 # test screen session "mc" exist
 screen -r mc -X stuff "echo test\n"
