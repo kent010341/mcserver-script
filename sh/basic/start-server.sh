@@ -19,7 +19,7 @@ while (($#)); do
         ;;
         "--help")
             echo "Usage: ./start-server.sh [options...]"
-            echo "    --memeory <memory>    RAM used for the server (in GB)"
+            echo "    --memory <memory>         RAM used for the server (in GB)"
             echo "    --filename <file name>    The file name of server.jar"
             exit 1
         ;;
