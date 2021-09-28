@@ -72,7 +72,7 @@ Edit the value of `default_memory`, `default_filename`, `default_version` to mak
 * start-server.sh
 ```
 ./start-server.sh [options]
-    --memeory <memory>    RAM used for the server (in GB)
+    --memory <memory>         RAM used for the server (in GB)
     --filename <file name>    The file name of server.jar
 ```  
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
@@ -90,7 +90,7 @@ Proceed a backup process.
 * screen-start-server.sh
 ```
 ./screen-start-server.sh [options]
-    --memeory <memory>    RAM used for the server (in GB)
+    --memory <memory>         RAM used for the server (in GB)
     --filename <file name>    The file name of server.jar
 ```
 Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
@@ -100,7 +100,7 @@ Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'serve
 * screen-backup.sh
 ```
 ./screen-backup.sh [options]
-    --memeory <memory>    RAM used for the server (in GB)
+    --memory <memory>         RAM used for the server (in GB)
     --filename <file name>    The file name of server.jar
 ```
 Stop the server inside the detached screen 'mc' and proceed a backup process.   
