@@ -78,6 +78,7 @@ echo "eula=true\n" > eula.txt
 echo -e "\033[1;96m[INFO] File eula.txt added. \033[0m"
 
 # run server.jar for initialize files
+gb=$default_memory
 mb=$(expr $gb \* 1024)M
 
 echo -e "\033[1;96m[INFO] Starting server with memory $gb GB... \033[0m"
