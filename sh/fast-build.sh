@@ -49,7 +49,7 @@ fi
 # get server file
 echo -e "\033[1;96m[INFO] Prepare to download minecraft server (version $default_version) \033[0m"
 
-ersion_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
 version_hash_key=$(curl --silent $version_file_url | grep "$default_version=" | cut -d">" -f 2)
 
 if [ "$version_hash_key" == "" ]; then
@@ -78,6 +78,7 @@ echo "eula=true\n" > eula.txt
 echo -e "\033[1;96m[INFO] File eula.txt added. \033[0m"
 
 # run server.jar for initialize files
+gb=$default_memory
 mb=$(expr $gb \* 1024)M
 
 echo -e "\033[1;96m[INFO] Starting server with memory $gb GB... \033[0m"
