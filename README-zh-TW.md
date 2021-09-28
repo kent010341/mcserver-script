@@ -72,7 +72,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 * start-server.sh
 ```
 ./start-server.sh [選項]
-    --memeory <記憶體>    伺服器使用的RAM (單位：GB)
+    --memory <記憶體>        伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>    伺服器啟動檔檔案名稱
 ```  
 啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
@@ -90,7 +90,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 * screen-start-server.sh
 ```
 ./screen-start-server.sh [選項]
-    --memeory <記憶體>    伺服器使用的RAM (單位：GB)
+    --memory <記憶體>        伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>    伺服器啟動檔檔案名稱
 ```
 以一個分離(detached)的screen session (名稱：mc)啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
@@ -100,7 +100,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 * screen-backup.sh
 ```
 ./screen-backup.sh [選項]
-    --memeory <記憶體>    伺服器使用的RAM (單位：GB)
+    --memory <記憶體>        伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>    伺服器啟動檔檔案名稱
 ```
 停止名為mc的分離(detached)screen session中的伺服器，並執行備份。  
