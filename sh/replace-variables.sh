@@ -6,6 +6,38 @@ default_memory="default"
 default_filename="default"
 default_version="default"
 
+while (($#)); do
+    case $1 in
+        "--memory")
+            shift
+            default_memory=$1;
+            shift
+        ;;
+        "--filename")
+            shift
+            default_filename=$1;
+            shift
+        ;;
+        "--version")
+            shift
+            default_version=$1;
+            shift
+        ;;
+        "--help")
+            echo "Usage: ./replace-variables.sh [options...]"
+            echo "    --memory <memory>         RAM used for the server (in GB)"
+            echo "    --filename <file name>    The file name of server.jar"
+            echo "    --version <version>       Minecraft server version"
+            exit 1
+        ;;
+        *)
+            echo "unknown argument '$1'"
+            echo "Use --help to get the usage information."
+            exit 1
+        ;;
+    esac
+done
+
 # ==========================================================
 
 # function for replacing string at specify line in the file

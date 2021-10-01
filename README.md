@@ -61,12 +61,12 @@ Process steps:
 
 * replace-variables.sh
 ```
-./replace-variables.sh
+./replace-variables.sh [options]
+    --memory <memory>         RAM used for the server (in GB)
+    --filename <file name>    The file name of server.jar
+    --version <version>       Minecraft server version
 ```
 Change all relative variables in this repository.  
-Edit the value of `default_memory`, `default_filename`, `default_version` to make the change.
-
-> `"default"` won't change anything.
 
 ### sh/basic/
 * start-server.sh

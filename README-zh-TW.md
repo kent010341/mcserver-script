@@ -61,12 +61,12 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 * replace-variables.sh
 ```
-./replace-variables.sh
+./replace-variables.sh [選項]
+    --memory <記憶體>        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>    伺服器啟動檔檔案名稱
+    --version <版本>         伺服器版本
 ```
-變更所有檔案中的相關變數。    
-手動修改`default_memory`、`default_filename`、`default_version`的數值來使所有檔案變更。
-
-> `"default"`不會變更任何檔案。
+變更所有檔案中的相關變數。  
 
 ### sh/basic/ 
 * start-server.sh
