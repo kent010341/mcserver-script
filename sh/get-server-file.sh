@@ -4,6 +4,12 @@ default="latest"
 latest="1.17.1"
 version=${1:-$default}
 
+if [ $version == "--help" ]; then
+    echo "Usage: ./get-server-file.sh [version]"
+    echo "    By default, the version is $latest"
+    exit 1
+fi
+
 if [ $version == "latest" ]; then
     echo -e "\033[1;96m[INFO] Latest version is 1.17.1 \033[0m"
     version=$latest
