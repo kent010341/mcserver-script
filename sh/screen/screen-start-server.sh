@@ -37,7 +37,7 @@ done
 screen -version
 
 # if the command above execute failed, install screen
-if [ ! $? -eq 1 ]; then
+if [ ! $? -eq 1 ] && [ ! $? -eq 0 ]; then
     echo -e "\033[1;91m[WARNING] screen isn't installed. Start installing... \033[0m"
     sudo apt-get install screen -y 
     echo -e "\033[1;93m[SUCCESS] screen installed. \033[0m"
