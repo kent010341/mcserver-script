@@ -47,7 +47,10 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 * fast-build.sh
 ```
-./fast-build.sh
+./fast-build.sh [選項]
+    --memory <記憶體>        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>    伺服器啟動檔檔案名稱
+    --version <版本>         伺服器版本
 ```
 執行以下步驟： 
 1. 確認Java安裝

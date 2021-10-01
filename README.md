@@ -47,7 +47,10 @@ By default, this script will install OpenJDK 16.
 
 * fast-build.sh
 ```
-./fast-build.sh
+./fast-build.sh [options]
+    --memory <memory>         RAM used for the server (in GB)
+    --filename <file name>    The file name of server.jar
+    --version <version>       Minecraft server version
 ```
 Process steps:  
 1. Check Java installation
