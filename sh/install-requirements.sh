@@ -26,7 +26,7 @@ else
     screen -version
 
     # if the command above execute failed, install screen
-    if [ $? -eq 1 ]; then
+    if [ $? -eq 0 ] || [ $? -eq 1 ]; then
         echo -e "\033[1;96m[INFO] screen is installed. \033[0m"
     else
         echo -e "\033[1;96m[INFO] screen isn't installed. Start installing... \033[0m"
