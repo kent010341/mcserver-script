@@ -1,5 +1,26 @@
 #!/bin/bash
 
+noscreen=0
+
+while (($#)); do
+    case $1 in
+        "--noscreen")
+            noscreen=1
+            shift
+        ;;
+        "--help")
+            echo "Usage: ./install-requirements.sh [--noscreen]"
+            echo "    --noscreen    Ignore checking screen"
+            exit 1
+        ;;
+        *)
+            echo "unknown argument '$1'"
+            echo "Use --help to get the usage information."
+            exit 1
+        ;;
+    esac
+done
+
 # check Java version
 echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
 java -version
@@ -18,7 +39,7 @@ else
     fi
 fi
 
-if [ $1 == '--noscreen' ]; then
+if [ $noscreen -eq 1 ]; then
     exit 1
 else
     # check screen installed
