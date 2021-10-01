@@ -5,7 +5,7 @@ noscreen=0
 while (($#)); do
     case $1 in
         "--noscreen")
-            noscreen=1;
+            noscreen=1
             shift
         ;;
         "--help")

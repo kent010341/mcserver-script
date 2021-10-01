@@ -10,17 +10,17 @@ while (($#)); do
     case $1 in
         "--memory")
             shift
-            default_memory=$1;
+            default_memory=$1
             shift
         ;;
         "--filename")
             shift
-            default_filename=$1;
+            default_filename=$1
             shift
         ;;
         "--version")
             shift
-            default_version=$1;
+            default_version=$1
             shift
         ;;
         "--help")
