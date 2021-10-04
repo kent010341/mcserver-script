@@ -39,8 +39,15 @@ while (($#)); do
 done
 
 # ==========================================================
+# Check if this script is run at the folder "sh".
+if [ "$(pwd | grep sh)" == "" ]; then
+    echo -e "\033[1;91m[ERROR] replace-variables.sh must be run at the folder \"sh\". \033[0m"
+    exit 1
+fi
 
+# ==========================================================
 # function for replacing string at specify line in the file
+
 function replace_file() {
     target_str=$1
     replace_str=$2
