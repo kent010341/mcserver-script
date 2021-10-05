@@ -72,21 +72,25 @@ fi
 
 # ==========================================================
 # get server file
-echo -e "\033[1;96m[INFO] Prepare to download minecraft server (version $default_version) \033[0m"
+if [ -f "server.jar" ]; then
+    echo -e "\033[1;96m[INFO] server.jar already exists. \033[0m"
+else
+    echo -e "\033[1;96m[INFO] Prepare to download minecraft server (version $default_version) \033[0m"
 
-version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
-version_hash_key=$(curl --silent $version_file_url | grep "$default_version=" | cut -d">" -f 2)
+    version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+    version_hash_key=$(curl --silent $version_file_url | grep "$default_version=" | cut -d">" -f 2)
 
-if [ "$version_hash_key" == "" ]; then
-    echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
-    exit 1
+    if [ "$version_hash_key" == "" ]; then
+        echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
+        exit 1
+    fi
+
+    url="https://launcher.mojang.com/v1/objects/$version_hash_key/server.jar"
+
+    # download
+    wget -O ./server.jar $url
+    echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
 fi
-
-url="https://launcher.mojang.com/v1/objects/$version_hash_key/server.jar"
-
-# download
-wget -O ./server.jar $url
-echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
 
 # ==========================================================
 # test screen session "mc" exist
