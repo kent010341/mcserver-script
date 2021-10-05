@@ -2,7 +2,6 @@
 
 # Global variables
 default_memory=2 #GB
-default_filename=server.jar
 default_version=1.17.1
 
 while (($#)); do
@@ -10,11 +9,6 @@ while (($#)); do
         "--memory")
             shift
             default_memory=$1
-            shift
-        ;;
-        "--filename")
-            shift
-            default_filename=$1
             shift
         ;;
         "--version")
@@ -25,7 +19,6 @@ while (($#)); do
         "--help")
             echo "Usage: ./fast-build.sh [options...]"
             echo "    --memory <memory>         RAM used for the server (in GB)"
-            echo "    --filename <file name>    The file name of server.jar"
             echo "    --version <version>       Minecraft server version"
             exit 1
         ;;
