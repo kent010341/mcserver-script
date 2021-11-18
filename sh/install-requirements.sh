@@ -29,9 +29,9 @@ java -version
 if [ $? -eq 0 ]; then
     echo -e "\033[1;96m[INFO] Java is installed. \033[0m"
 else
-    # install JDK 17 (for 1.18)
+    # install JRE of Java 17 (for 1.18)
     echo -e "\033[1;96m[INFO] Java isn't installed. Start installing... \033[0m"
-    sudo apt-get install openjdk-17-jdk -y
+    sudo apt-get install openjdk-17-jre -y
     if [ $? -eq 0 ]; then
         echo -e "\033[1;93m[SUCCESS] Java installed successfully. \033[0m"
     else
