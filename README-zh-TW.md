@@ -43,7 +43,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 ./install-requirements.sh [--noscreen]
 ```
 確認Java與screen是否安裝，若未安裝則自動進行安裝。在指令末端加上`--noscreen`來跳過確認screen的步驟。  
-此腳本預設安裝OpenJDK 16。
+此腳本預設安裝OpenJDK 17。
 
 * fast-build.sh
 ```
