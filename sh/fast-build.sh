@@ -2,7 +2,7 @@
 
 # Global variables
 default_memory=2 #GB
-default_version=1.17.1
+default_version=1.18
 
 while (($#)); do
     case $1 in
