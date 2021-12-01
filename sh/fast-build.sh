@@ -125,7 +125,7 @@ echo -e "\033[1;96m[INFO] Starting server with memory $gb GB... \033[0m"
 sleep 1s
 
 # start server
-screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
+screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar ./server.jar nogui\n"
 
 echo -e "\033[1;93m[SUCCESS] Server has already started at a detached screen 'mc'. \033[0m"
 echo -e "\033[1;93m[SUCCESS] Use 'screen -r mc' to get into the screen. (Use Ctrl + A + D to leave) \033[0m"
