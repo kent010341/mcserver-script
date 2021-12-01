@@ -1,7 +1,7 @@
 #!/bin/bash
 
 default="latest"
-latest="1.17.1"
+latest="1.18"
 version=${1:-$default}
 
 if [ $version == "--help" ]; then
@@ -11,7 +11,7 @@ if [ $version == "--help" ]; then
 fi
 
 if [ $version == "latest" ]; then
-    echo -e "\033[1;96m[INFO] Latest version is 1.17.1 \033[0m"
+    echo -e "\033[1;96m[INFO] Latest version is $latest \033[0m"
     version=$latest
 fi
 
