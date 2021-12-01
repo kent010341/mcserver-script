@@ -89,7 +89,18 @@ else
 
     # download
     wget -O ./server.jar $url
-    echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
+    if [ $? -eq 0 ]; then
+        echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
+    else
+        echo -e "\033[1;91m[WARNING] Download process using wget failed. Use curl instead. \033[0m"
+        curl $url --silent -o ./server.jar
+        if [ $? -eq 0 ]; then
+            echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
+        else
+            echo -e "\033[1;91m[ERROR] Download server.jar failed. \033[0m"
+            exit 1
+        fi
+    fi
 fi
 
 # ==========================================================
