@@ -3,23 +3,49 @@
 # Global variables
 default_memory=2 #GB
 default_version=1.18
+is_ecb=false
+default_difficulty=easy
+is_seed_set=false
 
 while (($#)); do
     case $1 in
-        "--memory")
+        "--memory" | "-m")
             shift
             default_memory=$1
             shift
         ;;
-        "--version")
+        "--version" | "-v")
             shift
             default_version=$1
             shift
         ;;
+        "--enable-command-block" | "-ecb")
+            is_ecb=true
+            shift
+        ;;
+        "--difficulty" | "-d")
+            shift
+            default_difficulty=$1
+            shift
+        ;;
+        "--seed" | "-s")
+            shift
+            is_seed_set=true
+            seed=$1
+            shift
+        ;;
         "--help")
             echo "Usage: ./fast-build.sh [options...]"
-            echo "    --memory <memory>         RAM used for the server (in GB)"
-            echo "    --version <version>       Minecraft server version"
+            echo "    --memory <memory>, -m <memory>"    
+            echo "        RAM used for the server (in GB)"
+            echo "    --version <version>, -v <version>"    
+            echo "        Minecraft server version"
+            echo "    --enable-command-block, -ecb"    
+            echo "        Enable command block in server.properties"
+            echo "    --difficulty <difficulty>, -d <difficulty>"    
+            echo "        Set difficulty in server.properties"
+            echo "    --seed <seed>, -s <seed>"    
+            echo "        Set seed in server.properties"
             exit 1
         ;;
         *)
@@ -113,16 +139,34 @@ if [ ! $? -eq 0 ]; then
 fi
 
 # ==========================================================
-# initialize eula.txt
-echo "eula=true\n" > eula.txt
-echo -e "\033[1;96m[INFO] File eula.txt added. \033[0m"
-
 # run server.jar for initialize files
 gb=$default_memory
 mb=$(expr $gb \* 1024)M
 
 echo -e "\033[1;96m[INFO] Starting server with memory $gb GB... \033[0m"
 sleep 1s
+
+# start server
+screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar ./server.jar nogui\n"
+
+echo -e "\033[1;93m[SUCCESS] Server has already initialized at a detached screen 'mc'. \033[0m"
+
+# ==========================================================
+echo -e "\033[1;96m[INFO] Wait until the initializing process finished... \033[0m"
+# TODO: check files first created
+sleep 3s
+while [ -f "eula.txt" ] | [ -f "server.properties" ]
+    sleep 1s
+done
+
+# edit server.properties
+if is_ecb ; then
+    sed "s/enable-command-block=*/enable-command-block=true/g" serer.properties
+fi
+sed "s/difficulty=*/difficulty=$default_difficulty/g" serer.properties
+if is_seed_set ; then
+    echo "level-seed=$seed" >> serer.properties
+fi
 
 # start server
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar ./server.jar nogui\n"
