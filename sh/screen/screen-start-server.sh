@@ -8,25 +8,27 @@ default_filename=server.jar
 # parameter parsing
 while (($#)); do
     case $1 in
-        "--memory")
+        "--memory" | "-m")
             shift
             default_memory=$1
             shift
         ;;
-        "--filename")
+        "--filename" | "-f")
             shift
             default_filename=$1
             shift
         ;;
-        "--help")
+        "--help" | "-h")
             echo "Usage: ./screen-start-server.sh [options...]"
-            echo "    --memory <memory>         RAM used for the server (in GB)"
-            echo "    --filename <file name>    The file name of server.jar"
+            echo "    --memory <memory>, -m <memory>"
+            echo "        RAM used for the server (in GB)"
+            echo "    --filename <file name>, -f <file name>"
+            echo "        The file name of server.jar"
             exit 1
         ;;
         *)
             echo "unknown argument '$1'"
-            echo "Use --help to get the usage information."
+            echo "Use --help (or -h) to get the usage information."
             exit 1
         ;;
     esac
