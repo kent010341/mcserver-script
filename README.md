@@ -40,17 +40,20 @@ Defaultly use 'latest' as version. ('latest' is manually edit.)
 
 * install-requirements.sh
 ```
-./install-requirements.sh [--noscreen]
+./install-requirements.sh [--noscreen, -ns]
 ```
-Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` to ignore checking screen.  
+Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` (abbreviation: `-ns`) to ignore checking screen.  
 By default, this script will install OpenJDK 17 (JRE).
 
 * fast-build.sh
 ```
 ./fast-build.sh [options]
-    --memory <memory>         RAM used for the server (in GB)
-    --filename <file name>    The file name of server.jar
-    --version <version>       Minecraft server version
+    --memory <memory>, -m <memory>
+        RAM used for the server (in GB)
+    --filename <file name>, -f <file name>
+        The file name of server.jar
+    --version <version>, -v <version>
+        Minecraft server version
 ```
 Process steps:  
 1. Check Java installation
@@ -65,9 +68,12 @@ Process steps:
 * replace-variables.sh
 ```
 ./replace-variables.sh [options]
-    --memory <memory>         RAM used for the server (in GB)
-    --filename <file name>    The file name of server.jar
-    --version <version>       Minecraft server version
+    --memory <memory>, -m <memory>
+        RAM used for the server (in GB)
+    --filename <file name>, -f <file name>
+        The file name of server.jar
+    --version <version>, -v <version>
+        Minecraft server version
 ```
 Change all relative variables in this repository.  
 
@@ -75,8 +81,10 @@ Change all relative variables in this repository.
 * start-server.sh
 ```
 ./start-server.sh [options]
-    --memory <memory>         RAM used for the server (in GB)
-    --filename <file name>    The file name of server.jar
+    --memory <memory>, -m <memory>
+        RAM used for the server (in GB)
+    --filename <file name>, -f <file name>
+        The file name of server.jar
 ```  
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > To edit the default memory used, change the value of variable **default_memory** at line 4.
@@ -93,8 +101,10 @@ Proceed a backup process.
 * screen-start-server.sh
 ```
 ./screen-start-server.sh [options]
-    --memory <memory>         RAM used for the server (in GB)
-    --filename <file name>    The file name of server.jar
+    --memory <memory>, -m <memory>
+        RAM used for the server (in GB)
+    --filename <file name>, -f <file name>
+        The file name of server.jar
 ```
 Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > * To edit the default memory used, change the value of variable **default_memory** at line 4.  
@@ -103,8 +113,10 @@ Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'serve
 * screen-backup.sh
 ```
 ./screen-backup.sh [options]
-    --memory <memory>         RAM used for the server (in GB)
-    --filename <file name>    The file name of server.jar
+    --memory <memory>, -m <memory>
+        RAM used for the server (in GB)
+    --filename <file name>, -f <file name>
+        The file name of server.jar
 ```
 Stop the server inside the detached screen 'mc' and proceed a backup process.   
 After backup, the server will automatically restart. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar to start the server. 

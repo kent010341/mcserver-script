@@ -4,18 +4,19 @@ noscreen=0
 
 while (($#)); do
     case $1 in
-        "--noscreen")
+        "--noscreen" | "-ns")
             noscreen=1
             shift
         ;;
-        "--help")
+        "--help" | "-h")
             echo "Usage: ./install-requirements.sh [--noscreen]"
-            echo "    --noscreen    Ignore checking screen"
+            echo "    --noscreen, -ns"
+            echo "        Ignore checking screen"
             exit 1
         ;;
         *)
             echo "unknown argument '$1'"
-            echo "Use --help to get the usage information."
+            echo "Use --help (or -h) to get the usage information."
             exit 1
         ;;
     esac
