@@ -4,7 +4,7 @@
 default_memory=2 #GB
 default_version=1.18
 is_ecb=false
-default_difficulty=easy
+is_d_set=false
 is_seed_set=false
 
 while (($#)); do
@@ -25,7 +25,13 @@ while (($#)); do
         ;;
         "--difficulty" | "-d")
             shift
-            default_difficulty=$1
+            if [ $1 != "hard" ] & [ $1 != "normal" ] & 
+                [ $1 != "easy" ] & [ $1 != "peace" ]; then
+                echo -e "\033[1;91m[ERROR] Unacceptable difficulty '$1'. It should be 'hard', 'normal', 'easy' or 'peace'. \033[0m"
+                exit 1
+            fi
+            is_d_set=true
+            difficulty=$1
             shift
         ;;
         "--seed" | "-s")
@@ -155,17 +161,25 @@ echo -e "\033[1;93m[SUCCESS] Server has already initialized at a detached screen
 echo -e "\033[1;96m[INFO] Wait until the initializing process finished... \033[0m"
 # TODO: check files first created
 sleep 3s
-while [ -f "eula.txt" ] | [ -f "server.properties" ]
+while [ ! -f "eula.txt" ] | [ ! -f "server.properties" ]; do
     sleep 1s
 done
+echo -e "\033[1;96m[INFO] The initializing process is finished. \033[0m"
+
+# edit eula.txt
+sed "s/eula=*/eula=true/g" eula.txt
 
 # edit server.properties
 if is_ecb ; then
-    sed "s/enable-command-block=*/enable-command-block=true/g" serer.properties
+    sed "s/enable-command-block=*/enable-command-block=true/g" server.properties
 fi
-sed "s/difficulty=*/difficulty=$default_difficulty/g" serer.properties
+
+if is_d_set; then
+    sed "s/difficulty=*/difficulty=$difficulty/g" server.properties
+fi
+
 if is_seed_set ; then
-    echo "level-seed=$seed" >> serer.properties
+    echo "level-seed=$seed" >> server.properties
 fi
 
 # start server
