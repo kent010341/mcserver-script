@@ -40,7 +40,7 @@ while (($#)); do
             seed=$1
             shift
         ;;
-        "--help")
+        "--help" | "-h")
             echo "Usage: ./fast-build.sh [options...]"
             echo "    --memory <memory>, -m <memory>"    
             echo "        RAM used for the server (in GB)"
@@ -49,14 +49,14 @@ while (($#)); do
             echo "    --enable-command-block, -ecb"    
             echo "        Enable command block in server.properties"
             echo "    --difficulty <difficulty>, -d <difficulty>"    
-            echo "        Set difficulty in server.properties"
+            echo "        Set difficulty in server.properties, available value: hard, normal, easy, peace"
             echo "    --seed <seed>, -s <seed>"    
             echo "        Set seed in server.properties"
             exit 1
         ;;
         *)
             echo "unknown argument '$1'"
-            echo "Use --help to get the usage information."
+            echo "Use --help (or -h) to get the usage information."
             exit 1
         ;;
     esac
