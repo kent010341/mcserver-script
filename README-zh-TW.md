@@ -40,17 +40,20 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 * install-requirements.sh
 ```
-./install-requirements.sh [--noscreen]
+./install-requirements.sh [--noscreen, -ns]
 ```
-確認Java與screen是否安裝，若未安裝則自動進行安裝。在指令末端加上`--noscreen`來跳過確認screen的步驟。  
+確認Java與screen是否安裝，若未安裝則自動進行安裝。在指令末端加上`--noscreen` (可用縮寫`-ns`)來跳過確認screen的步驟。  
 此腳本預設安裝OpenJDK 17 (JRE)。
 
 * fast-build.sh
 ```
 ./fast-build.sh [選項]
-    --memory <記憶體>        伺服器使用的RAM (單位：GB)
-    --filename <檔案名稱>    伺服器啟動檔檔案名稱
-    --version <版本>         伺服器版本
+    --memory <記憶體>, -m <記憶體>
+        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>, -f <檔案名稱>
+        伺服器啟動檔檔案名稱
+    --version <版本>, -v <版本>
+        伺服器版本
 ```
 執行以下步驟： 
 1. 確認Java安裝
@@ -65,9 +68,12 @@ git clone https://github.com/kent010341/mcserver-script.git
 * replace-variables.sh
 ```
 ./replace-variables.sh [選項]
-    --memory <記憶體>        伺服器使用的RAM (單位：GB)
-    --filename <檔案名稱>    伺服器啟動檔檔案名稱
-    --version <版本>         伺服器版本
+    --memory <記憶體>, -m <記憶體>
+        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>, -f <檔案名稱>
+        伺服器啟動檔檔案名稱
+    --version <版本>, -v <版本>
+        伺服器版本
 ```
 變更所有檔案中的相關變數。  
 
@@ -75,8 +81,10 @@ git clone https://github.com/kent010341/mcserver-script.git
 * start-server.sh
 ```
 ./start-server.sh [選項]
-    --memory <記憶體>        伺服器使用的RAM (單位：GB)
-    --filename <檔案名稱>    伺服器啟動檔檔案名稱
+    --memory <記憶體>, -m <記憶體>
+        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>, -f <檔案名稱>
+        伺服器啟動檔檔案名稱
 ```  
 啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
 > 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
@@ -93,8 +101,10 @@ git clone https://github.com/kent010341/mcserver-script.git
 * screen-start-server.sh
 ```
 ./screen-start-server.sh [選項]
-    --memory <記憶體>        伺服器使用的RAM (單位：GB)
-    --filename <檔案名稱>    伺服器啟動檔檔案名稱
+    --memory <記憶體>, -m <記憶體>
+        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>, -f <檔案名稱>
+        伺服器啟動檔檔案名稱
 ```
 以一個分離(detached)的screen session (名稱：mc)啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
 > * 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
@@ -103,8 +113,10 @@ git clone https://github.com/kent010341/mcserver-script.git
 * screen-backup.sh
 ```
 ./screen-backup.sh [選項]
-    --memory <記憶體>        伺服器使用的RAM (單位：GB)
-    --filename <檔案名稱>    伺服器啟動檔檔案名稱
+    --memory <記憶體>, -m <記憶體>
+        伺服器使用的RAM (單位：GB)
+    --filename <檔案名稱>, -f <檔案名稱>
+        伺服器啟動檔檔案名稱
 ```
 停止名為mc的分離(detached)screen session中的伺服器，並執行備份。  
 備份完成後會重啟伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱來重啟伺服器。  
