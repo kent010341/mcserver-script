@@ -54,6 +54,12 @@ By default, this script will install OpenJDK 17 (JRE).
         The file name of server.jar
     --version <version>, -v <version>
         Minecraft server version
+    --enable-command-block, -ecb   
+        Enable command block in server.properties
+    --difficulty <difficulty>, -d <difficulty> 
+        Set difficulty in server.properties, available value: hard, normal, easy, peace
+    --seed <seed>, -s <seed>
+        Set seed in server.properties
 ```
 Process steps:  
 1. Check Java installation

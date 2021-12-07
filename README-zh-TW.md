@@ -54,6 +54,12 @@ git clone https://github.com/kent010341/mcserver-script.git
         伺服器啟動檔檔案名稱
     --version <版本>, -v <版本>
         伺服器版本
+    --enable-command-block, -ecb   
+        設定server.properties允許使用指令方塊
+    --difficulty <difficulty>, -d <difficulty> 
+        設定server.properties的預設困難度，僅可使用hard, normal, easy或peace
+    --seed <seed>, -s <seed>
+        設定server.properties的地圖種子碼
 ```
 執行以下步驟： 
 1. 確認Java安裝

@@ -3,28 +3,60 @@
 # Global variables
 default_memory=2 #GB
 default_version=1.18
+is_ecb=false
+is_d_set=false
+is_seed_set=false
 
 while (($#)); do
     case $1 in
-        "--memory")
+        "--memory" | "-m")
             shift
             default_memory=$1
             shift
         ;;
-        "--version")
+        "--version" | "-v")
             shift
             default_version=$1
             shift
         ;;
-        "--help")
+        "--enable-command-block" | "-ecb")
+            is_ecb=true
+            shift
+        ;;
+        "--difficulty" | "-d")
+            shift
+            if [ $1 != "hard" ] & [ $1 != "normal" ] & 
+                [ $1 != "easy" ] & [ $1 != "peace" ]; then
+                echo -e "\033[1;91m[ERROR] Unacceptable difficulty '$1'. It should be 'hard', 'normal', 'easy' or 'peace'. \033[0m"
+                exit 1
+            fi
+            is_d_set=true
+            difficulty=$1
+            shift
+        ;;
+        "--seed" | "-s")
+            shift
+            is_seed_set=true
+            seed=$1
+            shift
+        ;;
+        "--help" | "-h")
             echo "Usage: ./fast-build.sh [options...]"
-            echo "    --memory <memory>         RAM used for the server (in GB)"
-            echo "    --version <version>       Minecraft server version"
+            echo "    --memory <memory>, -m <memory>"    
+            echo "        RAM used for the server (in GB)"
+            echo "    --version <version>, -v <version>"    
+            echo "        Minecraft server version"
+            echo "    --enable-command-block, -ecb"    
+            echo "        Enable command block in server.properties"
+            echo "    --difficulty <difficulty>, -d <difficulty>"    
+            echo "        Set difficulty in server.properties, available value: hard, normal, easy, peace"
+            echo "    --seed <seed>, -s <seed>"    
+            echo "        Set seed in server.properties"
             exit 1
         ;;
         *)
             echo "unknown argument '$1'"
-            echo "Use --help to get the usage information."
+            echo "Use --help (or -h) to get the usage information."
             exit 1
         ;;
     esac
@@ -113,16 +145,44 @@ if [ ! $? -eq 0 ]; then
 fi
 
 # ==========================================================
-# initialize eula.txt
-echo "eula=true\n" > eula.txt
-echo -e "\033[1;96m[INFO] File eula.txt added. \033[0m"
-
 # run server.jar for initialize files
 gb=$default_memory
 mb=$(expr $gb \* 1024)M
 
 echo -e "\033[1;96m[INFO] Starting server with memory $gb GB... \033[0m"
 sleep 1s
+
+# start server
+screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar ./server.jar nogui\n"
+
+echo -e "\033[1;93m[SUCCESS] Server has already initialized at a detached screen 'mc'. \033[0m"
+
+# ==========================================================
+# Wait for the initializing process finished 
+echo -e "\033[1;96m[INFO] Wait until the initializing process finished... \033[0m"
+sleep 3s
+while [ ! -f "eula.txt" ] | [ ! -f "server.properties" ] | [ ! -d "libraries" ] | [ ! -d "logs" ] | [ ! -d "versions" ]; do
+    sleep 1s
+done
+sleep 3s
+
+echo -e "\033[1;96m[INFO] The initializing process is finished. \033[0m"
+
+# edit eula.txt
+sed "s/eula=*/eula=true/g" eula.txt
+
+# edit server.properties
+if is_ecb ; then
+    sed "s/enable-command-block=*/enable-command-block=true/g" server.properties
+fi
+
+if is_d_set; then
+    sed "s/difficulty=*/difficulty=$difficulty/g" server.properties
+fi
+
+if is_seed_set ; then
+    echo "level-seed=$seed" >> server.properties
+fi
 
 # start server
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar ./server.jar nogui\n"
