@@ -158,12 +158,14 @@ screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar ./server.jar nogui\n"
 echo -e "\033[1;93m[SUCCESS] Server has already initialized at a detached screen 'mc'. \033[0m"
 
 # ==========================================================
+# Wait for the initializing process finished 
 echo -e "\033[1;96m[INFO] Wait until the initializing process finished... \033[0m"
-# TODO: check files first created
 sleep 3s
-while [ ! -f "eula.txt" ] | [ ! -f "server.properties" ]; do
+while [ ! -f "eula.txt" ] | [ ! -f "server.properties" ] | [ ! -d "libraries" ] | [ ! -d "logs" ] | [ ! -d "versions" ]; do
     sleep 1s
 done
+sleep 3s
+
 echo -e "\033[1;96m[INFO] The initializing process is finished. \033[0m"
 
 # edit eula.txt
