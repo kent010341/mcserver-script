@@ -35,8 +35,8 @@ git clone https://github.com/kent010341/mcserver-script.git
 ```
 ./get-server-file.sh [version]
 ```
-Get server.jar by version. Currently support 1.7.10, 1.12.2, 1.13.2, 1.14.4, 1.15.2, 1.16.5, 1.17, 1.17.1.  
-Defaultly use 'latest' as version. ('latest' is manually edit.)
+Get server.jar by version. Currently support the latest version from 1.7 to 1.18.  
+Defaultly use 'latest' as version. ('latest' is manually editted in `source/version-hash.txt`.)
 
 * install-requirements.sh
 ```
