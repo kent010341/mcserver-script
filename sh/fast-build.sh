@@ -2,10 +2,12 @@
 
 # Global variables
 default_memory=2 #GB
-default_version=1.18
 is_ecb=false
 is_d_set=false
 is_seed_set=false
+is_version_set=false
+
+version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
 
 while (($#)); do
     case $1 in
@@ -16,7 +18,8 @@ while (($#)); do
         ;;
         "--version" | "-v")
             shift
-            default_version=$1
+            is_version_set=true
+            version=$1
             shift
         ;;
         "--enable-command-block" | "-ecb")
@@ -107,10 +110,14 @@ fi
 if [ -f "server.jar" ]; then
     echo -e "\033[1;96m[INFO] server.jar already exists. \033[0m"
 else
-    echo -e "\033[1;96m[INFO] Prepare to download minecraft server (version $default_version) \033[0m"
+    echo -e "\033[1;96m[INFO] Prepare to download minecraft server (version $version) \033[0m"
 
-    version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
-    version_hash_key=$(curl --silent $version_file_url | grep "$default_version=" | cut -d">" -f 2)
+    response=$(curl --silent $version_file_url)
+
+    if ! $is_version_set; then
+        version=$(echo "$response" | grep "$latest=" | cut -d">" -f 2)
+    fi
+    version_hash_key=$(echo "$response" | grep "$version=" | cut -d">" -f 2)
 
     if [ "$version_hash_key" == "" ]; then
         echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
