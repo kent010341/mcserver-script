@@ -50,8 +50,6 @@ By default, this script will install OpenJDK 17 (JRE).
 ./fast-build.sh [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
-    --filename <file name>, -f <file name>
-        The file name of server.jar
     --version <version>, -v <version>
         Minecraft server version
     --enable-command-block, -ecb   
