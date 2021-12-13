@@ -35,8 +35,8 @@ git clone https://github.com/kent010341/mcserver-script.git
 ```
 ./get-server-file.sh [版本]
 ```
-取得對應版本的server.jar。目前支援版本1.7.10、1.12.2、1.13.2、1.14.4、1.15.2、1.16.5、1.17、1.17.1。  
-預設使用「latest」作為版本參數。(「latest」是手動更改的)  
+取得對應版本的server.jar。目前支援版本1.7\~1.18的最新版本。  
+預設使用「latest」作為版本參數。(「latest」存放於`source/version-hash.txt`，是手動更改的)  
 
 * install-requirements.sh
 ```
