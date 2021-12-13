@@ -115,7 +115,7 @@ else
     response=$(curl --silent $version_file_url)
 
     if ! $is_version_set; then
-        version=$(echo "$response" | grep "$latest=" | cut -d">" -f 2)
+        version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
     fi
     version_hash_key=$(echo "$response" | grep "$version=" | cut -d">" -f 2)
 
