@@ -149,6 +149,8 @@ screen -r mc -X stuff "echo test\n"
 # if the command above execute failed, create a detached screen
 if [ ! $? -eq 0 ]; then
     screen -dmS mc
+else
+    screen -r mc -X stuff "cd $(pwd)\n"
 fi
 
 # ==========================================================
