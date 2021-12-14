@@ -28,8 +28,8 @@ while (($#)); do
         ;;
         "--difficulty" | "-d")
             shift
-            if [ $1 != "hard" ] & [ $1 != "normal" ] & 
-                [ $1 != "easy" ] & [ $1 != "peace" ]; then
+            if [ $1 != "hard" ] && [ $1 != "normal" ] && 
+                [ $1 != "easy" ] && [ $1 != "peace" ]; then
                 echo -e "\033[1;91m[ERROR] Unacceptable difficulty '$1'. It should be 'hard', 'normal', 'easy' or 'peace'. \033[0m"
                 exit 1
             fi
