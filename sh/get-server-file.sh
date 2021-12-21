@@ -1,18 +1,41 @@
 #!/bin/bash
 
 default="latest"
-version=${1:-$default}
+is_version_set=false
 version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
 
-if [ $version == "--help" ] | [ $version == "-h" ]; then
-    echo "Usage: ./get-server-file.sh [version]"
-    echo "    By default, the version is $latest"
-    exit 1
-fi
+while (($#)); do
+    case $1 in
+        "--version" | "-v")
+            shift
+            is_version_set=true
+            version=$1
+            shift
+        ;;
+        "--path" | "-p")
+            shift
+            cd $1
+            shift
+        ;;
+        "--help" | "-h")
+            echo "Usage: ./get-server-file.sh [options...]"
+            echo "    --version <version>, -v <version>"    
+            echo "        Minecraft server version"
+            echo "    --path <path>, -p <path>"
+            echo "        The path of server.jar"
+            exit 1
+        ;;
+        *)
+            echo "unknown argument '$1'"
+            echo "Use --help (or -h) to get the usage information."
+            exit 1
+        ;;
+    esac
+done
 
 response=$(curl --silent $version_file_url)
 
-if [ $version == "latest" ]; then
+if ! is_version_set; then
     version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
     echo -e "\033[1;96m[INFO] Latest version is $version \033[0m"
 fi

@@ -17,12 +17,19 @@ while (($#)); do
             default_filename=$1
             shift
         ;;
+        "--path" | "-p")
+            shift
+            cd $1
+            shift
+        ;;
         "--help" | "-h")
             echo "Usage: ./start-server.sh [options...]"
             echo "    --memory <memory>, -m <memory>"
             echo "        RAM used for the server (in GB)"
             echo "    --filename <file name>, -f <file name>"
             echo "        The file name of server.jar"
+            echo "    --path <path>, -p <path>"
+            echo "        The path of server.jar"
             exit 1
         ;;
         *)

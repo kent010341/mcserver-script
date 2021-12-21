@@ -33,7 +33,11 @@ git clone https://github.com/kent010341/mcserver-script.git
 ### sh/
 * get-server-file.sh
 ```
-./get-server-file.sh [version]
+./get-server-file.sh [option]
+    --version <version>, -v <version>
+        Minecraft server version
+    --path <path>, -p <path>
+        The path of server.jar
 ```
 Get server.jar by version. Currently support the latest version from 1.7 to 1.18.  
 Defaultly use 'latest' as version. ('latest' is manually editted in `source/version-hash.txt`.)
@@ -52,6 +56,8 @@ By default, this script will install OpenJDK 17 (JRE).
         RAM used for the server (in GB)
     --version <version>, -v <version>
         Minecraft server version
+    --path <path>, -p <path>
+        The path of server.jar
     --enable-command-block, -ecb   
         Enable command block in server.properties
     --difficulty <difficulty>, -d <difficulty> 
@@ -64,8 +70,9 @@ Process steps:
 2. Check screen installation
 3. Download server.jar
 4. Create a detached screen session called 'mc'
-5. Create eula.txt
-6. Start Minecraft server in detached screen sesson 'mc'
+5. Start Minecraft server in detached screen sesson 'mc'
+6. Edit eula.txt, server.properties
+7. Start server again
 
 > Change default value (memory, server.jar filename, version) at line 4 ~ 6.
 
@@ -89,6 +96,8 @@ Change all relative variables in this repository.
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>
         The file name of server.jar
+    --path <path>, -p <path>
+        The path of server.jar
 ```  
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > To edit the default memory used, change the value of variable **default_memory** at line 4.
@@ -109,6 +118,8 @@ Proceed a backup process.
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>
         The file name of server.jar
+    --path <path>, -p <path>
+        The path of server.jar
 ```
 Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > * To edit the default memory used, change the value of variable **default_memory** at line 4.  
@@ -121,6 +132,8 @@ Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'serve
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>
         The file name of server.jar
+    --path <path>, -p <path>
+        The path of server.jar
 ```
 Stop the server inside the detached screen 'mc' and proceed a backup process.   
 After backup, the server will automatically restart. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar to start the server. 
