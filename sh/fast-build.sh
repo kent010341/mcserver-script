@@ -22,6 +22,11 @@ while (($#)); do
             version=$1
             shift
         ;;
+        "--path" | "-p")
+            shift
+            cd $1
+            shift
+        ;;
         "--enable-command-block" | "-ecb")
             is_ecb=true
             shift
@@ -49,6 +54,8 @@ while (($#)); do
             echo "        RAM used for the server (in GB)"
             echo "    --version <version>, -v <version>"    
             echo "        Minecraft server version"
+            echo "    --path <path>, -p <path>"
+            echo "        The path of server.jar"
             echo "    --enable-command-block, -ecb"    
             echo "        Enable command block in server.properties"
             echo "    --difficulty <difficulty>, -d <difficulty>"    

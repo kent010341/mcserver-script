@@ -33,7 +33,11 @@ git clone https://github.com/kent010341/mcserver-script.git
 ### sh/
 * get-server-file.sh
 ```
-./get-server-file.sh [版本]
+./get-server-file.sh [選項]
+    --version <版本>, -v <版本>
+        伺服器版本
+    --path <路徑>, -p <路徑>
+        server.jar的路徑
 ```
 取得對應版本的server.jar。目前支援版本1.7\~1.18的最新版本。  
 預設使用「latest」作為版本參數。(「latest」存放於`source/version-hash.txt`，是手動更改的)  
@@ -52,6 +56,8 @@ git clone https://github.com/kent010341/mcserver-script.git
         伺服器使用的RAM (單位：GB)
     --version <版本>, -v <版本>
         伺服器版本
+    --path <路徑>, -p <路徑>
+        server.jar的路徑
     --enable-command-block, -ecb   
         設定server.properties允許使用指令方塊
     --difficulty <difficulty>, -d <difficulty> 
@@ -64,8 +70,9 @@ git clone https://github.com/kent010341/mcserver-script.git
 2. 確認screen安裝
 3. 下載server.jar
 4. 建立一個分離(detached)的screen session (名稱：mc)
-5. 建立eula.txt
-6. 在screen session mc中啟動Minecraft伺服器
+5. 在screen session mc中啟動Minecraft伺服器
+6. 編輯eula.txt和server.properties
+7. 再次啟動伺服器
 
 > 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)
 
@@ -89,6 +96,8 @@ git clone https://github.com/kent010341/mcserver-script.git
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>
         伺服器啟動檔檔案名稱
+    --path <路徑>, -p <路徑>
+        server.jar的路徑
 ```  
 啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
 > 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
@@ -109,6 +118,8 @@ git clone https://github.com/kent010341/mcserver-script.git
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>
         伺服器啟動檔檔案名稱
+    --path <路徑>, -p <路徑>
+        server.jar的路徑
 ```
 以一個分離(detached)的screen session (名稱：mc)啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
 > * 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
@@ -121,6 +132,8 @@ git clone https://github.com/kent010341/mcserver-script.git
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>
         伺服器啟動檔檔案名稱
+    --path <路徑>, -p <路徑>
+        server.jar的路徑
 ```
 停止名為mc的分離(detached)screen session中的伺服器，並執行備份。  
 備份完成後會重啟伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱來重啟伺服器。  
