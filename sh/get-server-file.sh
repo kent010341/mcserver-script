@@ -34,13 +34,13 @@ while (($#)); do
 done
 
 if [ -f "./server.jar" ]; then
-    ehco -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
+    echo -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
     rm ./server.jar
 fi
 
 response=$(curl --silent $version_file_url)
 
-if ! is_version_set; then
+if ! $is_version_set; then
     version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
     echo -e "\033[1;96m[INFO] Latest version is $version \033[0m"
 fi
