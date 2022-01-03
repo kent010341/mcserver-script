@@ -72,6 +72,15 @@ while (($#)); do
     esac
 done
 
+function replace_file() {
+    target_str=$1
+    replace_str=$2
+    file_dir=$3
+
+    sed "s/$target_str/$replace_str/g" "$file_dir" > "$file_dir.tmp"
+    mv "$file_dir.tmp" "$file_dir"
+}
+
 # ==========================================================
 # check Java and screen
 
@@ -185,15 +194,15 @@ sleep 3s
 echo -e "\033[1;96m[INFO] The initializing process is finished. \033[0m"
 
 # edit eula.txt
-sed "s/eula=*/eula=true/g" eula.txt
+replace_file "eula=.*" "eula=true" eula.txt
 
 # edit server.properties
 if is_ecb ; then
-    sed "s/enable-command-block=*/enable-command-block=true/g" server.properties
+    replace_file "enable-command-block=.*" "enable-command-block=true" server.properties
 fi
 
 if is_d_set; then
-    sed "s/difficulty=*/difficulty=$difficulty/g" server.properties
+    replace_file "difficulty=.*" "difficulty=$difficulty" server.properties
 fi
 
 if is_seed_set ; then
