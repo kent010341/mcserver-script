@@ -9,7 +9,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: ./install-requirements.sh [--noscreen]"
+            echo "Usage: [sudo] ./install-requirements.sh [--noscreen]"
             echo "    --noscreen, -ns"
             echo "        Ignore checking screen"
             exit 1
@@ -21,6 +21,11 @@ while (($#)); do
         ;;
     esac
 done
+
+if [ $EUID -ne 0 ]; then
+    echo -e "\033[1;91m[WARNING] This script is recommended running with sudo. \033[0m"
+    sleep 2s
+fi
 
 # check Java version
 echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
