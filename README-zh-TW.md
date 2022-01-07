@@ -44,14 +44,16 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 * install-requirements.sh
 ```
-./install-requirements.sh [--noscreen, -ns]
+[sudo] ./install-requirements.sh [--noscreen, -ns]
 ```
 確認Java與screen是否安裝，若未安裝則自動進行安裝。在指令末端加上`--noscreen` (可用縮寫`-ns`)來跳過確認screen的步驟。  
 此腳本預設安裝OpenJDK 17 (JRE)。
 
+> Java和Screen的安裝步驟需要root權限，故建議使用`sudo`
+
 * fast-build.sh
 ```
-./fast-build.sh [選項]
+[sudo] ./fast-build.sh [選項]
     --memory <記憶體>, -m <記憶體>
         伺服器使用的RAM (單位：GB)
     --version <版本>, -v <版本>
@@ -75,6 +77,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 7. 再次啟動伺服器
 
 > 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)
+> Java和Screen的安裝步驟需要root權限，故建議使用`sudo`
 
 * replace-variables.sh
 ```

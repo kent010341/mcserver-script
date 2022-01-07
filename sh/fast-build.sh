@@ -49,7 +49,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: ./fast-build.sh [options...]"
+            echo "Usage: [sudo] ./fast-build.sh [options...]"
             echo "    --memory <memory>, -m <memory>"    
             echo "        RAM used for the server (in GB)"
             echo "    --version <version>, -v <version>"    
@@ -83,6 +83,11 @@ function replace_file() {
 
 # ==========================================================
 # check Java and screen
+
+if [ $EUID -ne 0 ]; then
+    echo -e "\033[1;91m[WARNING] This script is recommended running with sudo. \033[0m"
+    sleep 2s
+fi
 
 # check Java version
 echo -e "\033[1;96m[INFO] Checking Java... \033[0m"

@@ -44,14 +44,16 @@ Defaultly use 'latest' as version. ('latest' is manually editted in `source/vers
 
 * install-requirements.sh
 ```
-./install-requirements.sh [--noscreen, -ns]
+[sudo] ./install-requirements.sh [--noscreen, -ns]
 ```
 Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` (abbreviation: `-ns`) to ignore checking screen.  
 By default, this script will install OpenJDK 17 (JRE).
 
+> The Java and Screen installation process requires root permission, so using `sudo` is recommended.
+
 * fast-build.sh
 ```
-./fast-build.sh [options]
+[sudo] ./fast-build.sh [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
     --version <version>, -v <version>
@@ -75,6 +77,7 @@ Process steps:
 7. Start server again
 
 > Change default value (memory, server.jar filename, version) at line 4 ~ 6.
+> The Java and Screen installation process requires root permission, so using `sudo` is recommended.
 
 * replace-variables.sh
 ```
