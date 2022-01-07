@@ -76,7 +76,7 @@ git clone https://github.com/kent010341/mcserver-script.git
 6. 編輯eula.txt和server.properties
 7. 再次啟動伺服器
 
-> 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)
+> 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)  
 > Java和Screen的安裝步驟需要root權限，故建議使用`sudo`
 
 * replace-variables.sh
