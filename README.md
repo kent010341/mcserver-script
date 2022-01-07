@@ -76,7 +76,7 @@ Process steps:
 6. Edit eula.txt, server.properties
 7. Start server again
 
-> Change default value (memory, server.jar filename, version) at line 4 ~ 6.
+> Change default value (memory, server.jar filename, version) at line 4 ~ 6.  
 > The Java and Screen installation process requires root permission, so using `sudo` is recommended.
 
 * replace-variables.sh
