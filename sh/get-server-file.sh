@@ -23,7 +23,7 @@ while (($#)); do
             echo "        Minecraft server version"
             echo "    --path <path>, -p <path>"
             echo "        The path of server.jar"
-            exit 1
+            exit 0
         ;;
         *)
             echo "unknown argument '$1'"

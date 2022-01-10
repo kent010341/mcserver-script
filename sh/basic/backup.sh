@@ -3,7 +3,7 @@
 if [ $1 == "--help" ]; then
     echo "Usage: ./backup.sh"
     echo "    Proceed a backup process."
-    exit 1
+    exit 0
 fi
 
 # generating the backup folder
