@@ -62,7 +62,7 @@ while (($#)); do
             echo "        Set difficulty in server.properties, available value: hard, normal, easy, peace"
             echo "    --seed <seed>, -s <seed>"    
             echo "        Set seed in server.properties"
-            exit 1
+            exit 0
         ;;
         *)
             echo "unknown argument '$1'"

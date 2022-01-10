@@ -12,7 +12,7 @@ while (($#)); do
             echo "Usage: [sudo] ./install-requirements.sh [--noscreen]"
             echo "    --noscreen, -ns"
             echo "        Ignore checking screen"
-            exit 1
+            exit 0
         ;;
         *)
             echo "unknown argument '$1'"

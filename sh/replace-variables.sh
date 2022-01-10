@@ -31,7 +31,7 @@ while (($#)); do
             echo "        The file name of server.jar"
             echo "    --version <version>, -v <version>"
             echo "        Minecraft server version"
-            exit 1
+            exit 0
         ;;
         *)
             echo "unknown argument '$1'"
