@@ -1,7 +1,7 @@
 # Script for Minecraft Server
 
 ## How to use?
-###  files (for Unix OS)
+### Bash files (for Unix OS)
 1. Clone this repository to anywhere you want (git is required):  
 ```
 git clone https://github.com/kent010341/mcserver-script.git

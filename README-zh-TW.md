@@ -1,7 +1,7 @@
 # Minecraft伺服器腳本
 
 ## 如何使用？
-### 檔案
+### Bash檔案
 1. 複製git repository到任何你想要的地方(需要安裝git)：  
 ```
 git clone https://github.com/kent010341/mcserver-script.git
