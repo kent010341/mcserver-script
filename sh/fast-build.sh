@@ -202,15 +202,15 @@ echo -e "\033[1;96m[INFO] The initializing process is finished. \033[0m"
 replace_file "eula=.*" "eula=true" eula.txt
 
 # edit server.properties
-if is_ecb ; then
+if $is_ecb ; then
     replace_file "enable-command-block=.*" "enable-command-block=true" server.properties
 fi
 
-if is_d_set; then
+if $is_d_set; then
     replace_file "difficulty=.*" "difficulty=$difficulty" server.properties
 fi
 
-if is_seed_set ; then
+if $is_seed_set ; then
     echo "level-seed=$seed" >> server.properties
 fi
 
