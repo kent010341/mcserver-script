@@ -9,7 +9,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: [sudo] ./install-requirements.sh [--noscreen]"
+            echo "Usage: [sudo] ./install-requirements [--noscreen]"
             echo "    --noscreen, -ns"
             echo "        Ignore checking screen"
             exit 0

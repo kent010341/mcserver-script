@@ -24,7 +24,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: ./screen-start-server.sh [options...]"
+            echo "Usage: ./screen-backup [options...]"
             echo "    --memory <memory>, -m <memory>"
             echo "        RAM used for the server (in GB)"
             echo "    --filename <file name>, -f <file name>"
@@ -42,14 +42,36 @@ while (($#)); do
 done
 
 #======================================================
-# check screen installed
-screen -version
+# test screen session "mc" exist
+screen -r mc -X stuff "/say Server will be closed in 10 seconds. Restart after the backup process completed (usually less than 1 minute).\n"
 
-# if the command above execute failed, install screen
-if [ ! $? -eq 1 ] && [ ! $? -eq 0 ]; then
-    echo -e "\033[1;91m[WARNING] screen isn't installed. Start installing... \033[0m"
-    sudo apt-get install screen -y 
-    echo -e "\033[1;93m[SUCCESS] screen installed. \033[0m"
+# if the command above execute failed, send error message and quit
+if [ ! $? -eq 0 ]; then
+    echo -e "\033[1;91m[ERROR] screen session 'mc' doesn't exist. \033[0m"
+    exit 1
+fi
+
+echo -e "\033[1;96m[INFO] Warning players in game that server will be closed in 10 seconds... \033[0m"
+echo -e "\033[1;96m[INFO] Press Ctrl + C to interrupt the process. \033[0m"
+sleep 10s
+
+# stop server
+screen -r mc -X stuff '/stop\n'
+echo -e "\033[1;96m[INFO] Server stopped. \033[0m"
+
+# generating the backup folder
+if [ ! -d "./backup" ]; then
+    echo -e "\033[1;91m[WARNING] The folder 'backup' doesn't exist. \033[0m"
+    mkdir backup
+    echo -e "\033[1;93m[SUCCESS] Folder 'backup' created. \033[0m"
+fi
+
+if [ -d "./world" ]; then
+    cp -r ./world ./backup/world$(date +"%Y%m%d")
+    echo -e "\033[1;93m[SUCCESS] Backup successed. \033[0m"
+else
+    echo -e "\033[1;91m[ERROR] The 'world' folder doesn't exist. \033[0m"
+    exit 1
 fi
 
 #======================================================
@@ -61,16 +83,6 @@ mb=$(expr $gb \* 1024)M
 
 # defaultly using server.jar as file name
 filename=$default_filename
-
-# test screen session "mc" exist
-screen -r mc -X stuff "echo test\n"
-
-# if the command above execute failed, create a detached screen
-if [ ! $? -eq 0 ]; then
-    screen -dmS mc
-else
-    screen -r mc -X stuff "cd $(pwd)\n"
-fi
 
 # start server with screen
 screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"

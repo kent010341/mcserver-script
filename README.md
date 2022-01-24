@@ -1,7 +1,7 @@
 # Script for Minecraft Server
 
 ## How to use?
-### .sh files (for Unix OS)
+### Bash files (for Unix OS)
 1. Clone this repository to anywhere you want (git is required):  
 ```
 git clone https://github.com/kent010341/mcserver-script.git
@@ -9,12 +9,12 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 2. Copy (or move) the script you want to your server folder. e.g.,  
 ```
-cp ./basic/start-server.sh ~/mcserver/server/start-server.sh
+cp ./basic/start-server ~/mcserver/server/start-server
 ```
 
 3. Execute it. e.g.,
 ```
-./start-server.sh
+./start-server
 ```
 
 ### .bat files (for Windows OS)
@@ -31,9 +31,9 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 ## Usage
 ### sh/
-* get-server-file.sh
+* get-server-file
 ```
-./get-server-file.sh [option]
+./get-server-file [option]
     --version <version>, -v <version>
         Minecraft server version
     --path <path>, -p <path>
@@ -42,18 +42,18 @@ git clone https://github.com/kent010341/mcserver-script.git
 Get server.jar by version. Currently support the latest version from 1.7 to 1.18.  
 Defaultly use 'latest' as version. ('latest' is manually editted in `source/version-hash.txt`.)
 
-* install-requirements.sh
+* install-requirements
 ```
-[sudo] ./install-requirements.sh [--noscreen, -ns]
+[sudo] ./install-requirements [--noscreen, -ns]
 ```
 Check if Java and screen are installed. If not, the installation process will automatically start. Add `--noscreen` (abbreviation: `-ns`) to ignore checking screen.  
 By default, this script will install OpenJDK 17 (JRE).
 
 > The Java and Screen installation process requires root permission, so using `sudo` is recommended.
 
-* fast-build.sh
+* fast-build
 ```
-[sudo] ./fast-build.sh [options]
+[sudo] ./fast-build [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
     --version <version>, -v <version>
@@ -79,9 +79,9 @@ Process steps:
 > Change default value (memory, server.jar filename, version) at line 4 ~ 6.  
 > The Java and Screen installation process requires root permission, so using `sudo` is recommended.
 
-* replace-variables.sh
+* replace-variables
 ```
-./replace-variables.sh [options]
+./replace-variables [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>
@@ -92,9 +92,9 @@ Process steps:
 Change all relative variables in this repository.  
 
 ### sh/basic/
-* start-server.sh
+* start-server
 ```
-./start-server.sh [options]
+./start-server [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>
@@ -105,18 +105,18 @@ Change all relative variables in this repository.
 Start the server. Defaulty use 2GB memory and 'server.jar' as the filename of server.jar.  
 > To edit the default memory used, change the value of variable **default_memory** at line 4.
 
-* backup.sh
+* backup
 ```
-./backup.sh
+./backup
 ```  
 Proceed a backup process.  
 > * Create a folder called 'backup' if not exist.  
 > * This script will copy the 'world' folder into the 'backup' folder, and rename it with current date.  
 
 ### sh/screen/
-* screen-start-server.sh
+* screen-start-server
 ```
-./screen-start-server.sh [options]
+./screen-start-server [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>
@@ -128,9 +128,9 @@ Start the server with a detached screen 'mc'. Defaulty use 2GB memory and 'serve
 > * To edit the default memory used, change the value of variable **default_memory** at line 4.  
 > * To get into the detached screen, use command 'screen -r mc' and use Ctrl + A + D to leave it.
 
-* screen-backup.sh
+* screen-backup
 ```
-./screen-backup.sh [options]
+./screen-backup [options]
     --memory <memory>, -m <memory>
         RAM used for the server (in GB)
     --filename <file name>, -f <file name>

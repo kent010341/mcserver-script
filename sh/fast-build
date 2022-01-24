@@ -49,7 +49,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: [sudo] ./fast-build.sh [options...]"
+            echo "Usage: [sudo] ./fast-build [options...]"
             echo "    --memory <memory>, -m <memory>"    
             echo "        RAM used for the server (in GB)"
             echo "    --version <version>, -v <version>"    
