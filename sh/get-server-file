@@ -18,7 +18,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: ./get-server-file.sh [options...]"
+            echo "Usage: ./get-server-file [options...]"
             echo "    --version <version>, -v <version>"    
             echo "        Minecraft server version"
             echo "    --path <path>, -p <path>"

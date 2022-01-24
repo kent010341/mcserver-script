@@ -23,7 +23,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: ./start-server.sh [options...]"
+            echo "Usage: ./start-server [options...]"
             echo "    --memory <memory>, -m <memory>"
             echo "        RAM used for the server (in GB)"
             echo "    --filename <file name>, -f <file name>"

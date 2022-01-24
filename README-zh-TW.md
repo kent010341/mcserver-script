@@ -1,7 +1,7 @@
 # Minecraft伺服器腳本
 
 ## 如何使用？
-### .sh檔案
+### 檔案
 1. 複製git repository到任何你想要的地方(需要安裝git)：  
 ```
 git clone https://github.com/kent010341/mcserver-script.git
@@ -9,12 +9,12 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 2. 複製(或移動)你想要的腳本到server資料夾(內有server.jar的)。範例命令：  
 ```
-cp ./basic/start-server.sh ~/mcserver/server/start-server.sh
+cp ./basic/start-server ~/mcserver/server/start-server
 ```
 
 3. 執行腳本。範例命令：
 ```
-./start-server.sh
+./start-server
 ```
 
 ### .bat檔案
@@ -31,9 +31,9 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 ## 使用方法
 ### sh/
-* get-server-file.sh
+* get-server-file
 ```
-./get-server-file.sh [選項]
+./get-server-file [選項]
     --version <版本>, -v <版本>
         伺服器版本
     --path <路徑>, -p <路徑>
@@ -42,18 +42,18 @@ git clone https://github.com/kent010341/mcserver-script.git
 取得對應版本的server.jar。目前支援版本1.7\~1.18的最新版本。  
 預設使用「latest」作為版本參數。(「latest」存放於`source/version-hash.txt`，是手動更改的)  
 
-* install-requirements.sh
+* install-requirements
 ```
-[sudo] ./install-requirements.sh [--noscreen, -ns]
+[sudo] ./install-requirements [--noscreen, -ns]
 ```
 確認Java與screen是否安裝，若未安裝則自動進行安裝。在指令末端加上`--noscreen` (可用縮寫`-ns`)來跳過確認screen的步驟。  
 此腳本預設安裝OpenJDK 17 (JRE)。
 
 > Java和Screen的安裝步驟需要root權限，故建議使用`sudo`
 
-* fast-build.sh
+* fast-build
 ```
-[sudo] ./fast-build.sh [選項]
+[sudo] ./fast-build [選項]
     --memory <記憶體>, -m <記憶體>
         伺服器使用的RAM (單位：GB)
     --version <版本>, -v <版本>
@@ -79,9 +79,9 @@ git clone https://github.com/kent010341/mcserver-script.git
 > 在第4 ~ 6行變更預設值 (記憶體 memory, server.jar 檔案名稱 filename, 版本 version)  
 > Java和Screen的安裝步驟需要root權限，故建議使用`sudo`
 
-* replace-variables.sh
+* replace-variables
 ```
-./replace-variables.sh [選項]
+./replace-variables [選項]
     --memory <記憶體>, -m <記憶體>
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>
@@ -92,9 +92,9 @@ git clone https://github.com/kent010341/mcserver-script.git
 變更所有檔案中的相關變數。  
 
 ### sh/basic/ 
-* start-server.sh
+* start-server
 ```
-./start-server.sh [選項]
+./start-server [選項]
     --memory <記憶體>, -m <記憶體>
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>
@@ -105,18 +105,18 @@ git clone https://github.com/kent010341/mcserver-script.git
 啟動伺服器。預設使用2GB記憶體以及用「server.jar」作為伺服器啟動檔的檔案名稱。  
 > 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
 
-* backup.sh
+* backup
 ```
-./backup.sh
+./backup
 ```  
 執行備份。
 > * 如果沒有「backup」資料夾會自動建立。  
 > * 這個腳本會複製world資料夾到backup資料夾內，並以當前日期重新命名。   
 
 ### sh/screen/
-* screen-start-server.sh
+* screen-start-server
 ```
-./screen-start-server.sh [選項]
+./screen-start-server [選項]
     --memory <記憶體>, -m <記憶體>
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>
@@ -128,9 +128,9 @@ git clone https://github.com/kent010341/mcserver-script.git
 > * 如果你想變更預設的記憶體，修改腳本中的**default_memory**數值即可(在第4行)。  
 > * 如果你想操作分離的screen session，使用命令「screen -r mc」進入，要離開的話按下Ctrl + A + D即可。
 
-* screen-backup.sh
+* screen-backup
 ```
-./screen-backup.sh [選項]
+./screen-backup [選項]
     --memory <記憶體>, -m <記憶體>
         伺服器使用的RAM (單位：GB)
     --filename <檔案名稱>, -f <檔案名稱>

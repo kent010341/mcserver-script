@@ -24,7 +24,7 @@ while (($#)); do
             shift
         ;;
         "--help" | "-h")
-            echo "Usage: ./replace-variables.sh [options...]"
+            echo "Usage: ./replace-variables [options...]"
             echo "    --memory <memory>, -m <memory>"
             echo "        RAM used for the server (in GB)"
             echo "    --filename <file name>, -f <file name>"
