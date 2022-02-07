@@ -1,1 +1,156 @@
 #!/bin/bash
+
+# return 0 if is inside a screen session, if not, 1.
+function check_screen() {
+    if [ $STY != "" ]; then
+        echo -e "\033[1;96m[INFO] You're in a screen session ($STY). \033[0m"
+        return 0
+    else
+        echo -e "\033[1;96m[INFO] You're not in a screen session. \033[0m"
+        if [ $(screen -list | grep ".mc") == "" ]; then
+            echo -e "\033[1;96m[INFO] There's no screen session called 'mc'. Create one. \033[0m"
+            screen -dmS mc
+        fi
+        return 1
+    fi
+}
+
+function check_file() {
+    path=$1
+    if [ -f $path ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+function check_write_permission() {
+    if [ ! -w . ]; then
+        echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this directory ($(pwd)). Try using 'sudo' or change to another user. \033[0m"
+        exit 1
+    fi
+}
+
+function start() {
+    file_path=$1
+    mb=$(expr $2 \* 1024)M
+
+    check_file $file_path
+    if [ ! $? -eq 0 ]; then
+        echo -e "\033[1;91m[ERROR] No such file called $file_path \033[0m"
+        exit 1
+    fi
+
+    check_screen
+
+    if [ $? -eq 0 ]; then
+        java -Xmx$mb -Xms$mb -jar $file_path nogui
+    else
+        screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $file_path nogui\n"
+    fi
+}
+
+function stop() {
+    screen -r mc -X stuff "stop\n"
+}
+
+function update() {
+    check_write_permission
+
+    version=$1
+    if [ $version == "" ]; then
+        version=$(grep "latest=" ./version-hash.txt | cut -d">" -f 2)
+    fi
+
+    if [ -f "./server.jar" ]; then
+        echo -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
+        rm ./server.jar
+    fi
+
+    version_hash_key=$(grep "$version=" ./version-hash.txt | cut -d">" -f 2)
+    
+    if [ "$version_hash_key" == "" ]; then
+        echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
+        exit 1
+    fi
+
+    url="https://launcher.mojang.com/v1/objects/$version_hash_key/server.jar"
+
+    curl $url --silent -o ./server.jar
+    if [ $? -eq 0 ]; then
+        echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
+    else
+        echo -e "\033[1;91m[ERROR] Download server.jar failed. \033[0m"
+    fi
+}
+
+function fast_build() {
+    update
+    start
+}
+
+case $1 in
+    "start")
+        memory=2
+        filename="./server.jar"
+        while (($#)); do
+            case $2 in
+                "--memory" | "-m")
+                    shift
+                    memory=$2
+                    shift
+                ;;
+                "--filename" | "-f")
+                    shift
+                    filename=$2
+                    shift
+                ;;
+                "--help" | "-h")
+                    echo "Usage: mcserver start [options...]"
+                    echo "    --memory <memory>, -m <memory>"
+                    echo "        RAM used for the server (in GB)"
+                    echo "    --filename <file name>, -f <file name>"
+                    echo "        The file name of server.jar"
+                    exit 0
+                ;;
+                *)
+                    echo "unknown argument '$2'"
+                    echo "Use --help (or -h) to get the usage information."
+                    exit 1
+                ;;
+            esac
+        done
+
+        start $filename $memory
+    ;;
+    "stop")
+        stop
+    ;;
+    "screen")
+        check_screen
+        screen -r mc
+    ;;
+    "update")
+        update $2
+    ;;
+    "fast-build")
+        fast_build
+    ;;
+    "--help" | "-h")
+        echo "Usage: ./get-server-file [options...]"
+        echo "    start"    
+        echo "        Start Minecraft server"
+        echo "    stop"
+        echo "        Start Minecraft server"
+        echo "    screen"
+        echo "        Attach to screen session 'mc'"
+        echo "    fast-build"
+        echo "        Fast build on a new server"
+        exit 0
+    ;;
+    *)
+        echo "unknown argument '$1'"
+        echo "Use --help (or -h) to get the usage information."
+        exit 1
+    ;;
+esac

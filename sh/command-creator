@@ -1,27 +1,16 @@
 #!/bin/bash
 
-url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/mcserver"
-
 # Check write permission
 if [ ! -w "/usr/local/bin" ]; then
     echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at 'usr/local/bin'. Try using 'sudo' or change to another user. \033[0m"
     exit 1
 fi
 
-wget -O ./mcserver $url
-
+# create symbolic link
+ln -s ./source/mcserver /usr/local/bin/mcserver
 if [ $? -eq 0 ]; then
-    echo -e "\033[1;93m[SUCCESS] mcserver already downloaded. \033[0m"
+    echo -e "\033[1;93m[SUCCESS] Symbolic link created. \033[0m"
 else
-    echo -e "\033[1;91m[WARNING] Download process using wget failed. Use curl instead. \033[0m"
-    curl $url --silent -o ./mcserver
-    if [ $? -eq 0 ]; then
-        echo -e "\033[1;93m[SUCCESS] mcserver already downloaded. \033[0m"
-    else
-        echo -e "\033[1;91m[ERROR] Download mcserver failed. \033[0m"
-    fi
+    echo -e "\033[1;91m[ERROR] Symbolic link created failed. \033[0m"
+    exit 1
 fi
-
-chmod +x ./mcserver
-
-mv ./mcserver /usr/local/bin/
