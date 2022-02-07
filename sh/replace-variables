@@ -49,6 +49,13 @@ if [ "$(pwd | grep -E 'sh$')" == "" ]; then
 fi
 
 # ==========================================================
+# Check write permission
+if [ ! -w $(pwd) ]; then
+    echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this folder. Try using 'sudo' or change to another user. \033[0m"
+    exit 1
+fi
+
+# ==========================================================
 # function for replacing string at specify line in the file
 
 function replace_file() {

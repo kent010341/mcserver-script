@@ -89,6 +89,12 @@ if [ $EUID -ne 0 ]; then
     sleep 2s
 fi
 
+# Check write permission
+if [ ! -w $(pwd) ]; then
+    echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this folder. Try using 'sudo' or change to another user. \033[0m"
+    exit 1
+fi
+
 # check Java version
 echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
 java -version
