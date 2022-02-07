@@ -57,9 +57,12 @@ function stop() {
 function update() {
     check_write_permission
 
+    version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+    response=$(curl --silent $version_file_url)
+
     version=$1
     if [ $version == "" ]; then
-        version=$(grep "latest=" ./version-hash.txt | cut -d">" -f 2)
+        version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
     fi
 
     if [ -f "./server.jar" ]; then
@@ -67,7 +70,7 @@ function update() {
         rm ./server.jar
     fi
 
-    version_hash_key=$(grep "$version=" ./version-hash.txt | cut -d">" -f 2)
+    version_hash_key=$(echo "$response" | grep "$version=" | cut -d">" -f 2)
     
     if [ "$version_hash_key" == "" ]; then
         echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
