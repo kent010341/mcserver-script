@@ -33,6 +33,12 @@ while (($#)); do
     esac
 done
 
+# Check write permission
+if [ ! -w $(pwd) ]; then
+    echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this folder. Try using 'sudo' or change to another user. \033[0m"
+    exit 1
+fi
+
 if [ -f "./server.jar" ]; then
     echo -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
     rm ./server.jar
