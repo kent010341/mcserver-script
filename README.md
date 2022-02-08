@@ -31,6 +31,12 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 ## Usage
 ### sh/
+* command-creator
+```
+./command-creator
+```
+Create a symbolic link at `/usr/local/bin` which links to `sh/source/mcserver`.
+
 * get-server-file
 ```
 ./get-server-file [option]
@@ -151,3 +157,49 @@ Start server.
 Proceed a backup process.  
 > * Create a folder called 'backup' if not exist.  
 > * This script will copy the 'world' folder into the 'backup' folder, and rename it with current date. 
+
+---
+
+## mcserver command
+
+> use `command-creator` first to create symbolic link
+
+### mcserver start
+* options
+``` 
+--memory <memory>, -m <memory>
+    RAM used for the server (in GB)
+--filename <file name>, -f <file name>
+    The file name of server.jar
+```
+
+Start Minecraft server
+
+### mcserver stop
+
+Stop Minecraft server.
+
+### mcserver screen
+
+Attach to screen session 'mc'
+
+### mcserver update
+```
+mcserver update [version]
+```
+
+Update server.jar file to specified version. (Default: latest)
+
+### mcserver fast-build
+```
+mcserver fast-build [version]
+```
+
+Fast build on a new server. (Default: latest)
+
+### mcserver env
+```
+mcserver env [version]
+```
+
+Check and install JRE and screen. (Default: latest)
