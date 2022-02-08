@@ -31,6 +31,12 @@ git clone https://github.com/kent010341/mcserver-script.git
 
 ## 使用方法
 ### sh/
+* command-creator
+```
+./command-creator
+```
+在 `/usr/local/bin` 建立一個 symbolic link 與 `sh/source/mcserver` 連結。
+
 * get-server-file
 ```
 ./get-server-file [選項]
@@ -151,3 +157,49 @@ git clone https://github.com/kent010341/mcserver-script.git
 執行備份。
 > * 如果沒有「backup」資料夾會自動建立。  
 > * 這個腳本會複製world資料夾到backup資料夾內，並以當前日期重新命名。 
+
+---
+
+## mcserver command
+
+> 先使用 `command-creator` 以建立 symbolic link
+
+### mcserver start
+* 選項
+``` 
+--memory <記憶體>, -m <記憶體>
+    伺服器使用的RAM (單位：GB)
+--filename <檔案名稱>, -f <檔案名稱>
+    伺服器啟動檔檔案名稱
+```
+
+啟動 Minecraft 伺服器
+
+### mcserver stop
+
+停止 Minecraft server
+
+### mcserver screen
+
+回到 screen session 'mc' 內
+
+### mcserver update
+```
+mcserver update [版本]
+```
+
+以指定的版本更新 server.jar 檔案 (預設：最新版本)
+
+### mcserver fast-build
+```
+mcserver fast-build [版本]
+```
+
+在一個全新的伺服器快速建置 (預設：最新版本)
+
+### mcserver env
+```
+mcserver env [版本]
+```
+
+檢查 JRE 和 screen 的安裝 (預設：最新版本)
