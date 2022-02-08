@@ -123,8 +123,69 @@ function update() {
 # Download server.jar and start the server.
 ##
 function fast_build() {
-    update
+    get_env $1
+    update $1
     start
+}
+
+##
+# Check and install java and screen
+# Parameter:
+#     $1: Minecraft version (default: latest)
+##
+function get_env() {
+    check_write_permission
+
+    # check Java version
+    echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
+    java -version
+
+    # if the command above execute failed, download the latest version of JDK
+    if [ $? -eq 0 ]; then
+        echo -e "\033[1;96m[INFO] Java is installed. \033[0m"
+    else
+        version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+        response=$(curl --silent $version_file_url)
+
+        version=$1
+        if [ $version == "" ]; then
+            version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
+        fi
+
+        version=$(echo "$response" | grep "$version=" | cut -d"." -f 2)
+
+        if [ $version -ge 17 ]; then
+            jre_version=17
+        else
+            jre_version=8
+        fi
+        sudo apt-get install "openjdk-$jre_version-jre" -y
+
+        if [ $? -eq 0 ]; then
+            echo -e "\033[1;93m[SUCCESS] Java$jre_version installed successfully. \033[0m"
+        else
+            echo -e "\033[1;91m[ERROR] Java$jre_version installed failed. \033[0m"
+            exit 1
+        fi
+    fi
+
+    # check screen installed
+    echo -e "\033[1;96m[INFO] Checking screen... \033[0m"
+    screen -version
+
+    # if the command above execute failed, install screen
+    if [ $? -eq 0 ] || [ $? -eq 1 ]; then
+        echo -e "\033[1;96m[INFO] screen is installed. \033[0m"
+    else
+        echo -e "\033[1;96m[INFO] screen isn't installed. Start installing... \033[0m"
+        sudo apt-get install screen -y 
+        if [ $? -eq 0 ]; then
+            echo -e "\033[1;93m[SUCCESS] screen installed successfully. \033[0m"
+        else
+            echo -e "\033[1;91m[ERROR] screen installed failed. \033[0m"
+            exit 1
+        fi
+    fi
 }
 
 case $1 in
@@ -162,17 +223,47 @@ case $1 in
         start $filename $memory
     ;;
     "stop")
+        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
+            echo "Usage: mcserver stop"
+            echo "    Stop the server"
+            exit 0
+        fi
         stop
     ;;
     "screen")
+        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
+            echo "Usage: mcserver screen"
+            echo "    Attach to screen session 'mc'"
+            exit 0
+        fi
         check_screen
         screen -r mc
     ;;
     "update")
+        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
+            echo "Usage: mcserver update [version]"
+            echo "    Update server.jar file to specified version. (Default: latest)"
+            exit 0
+        fi
         update $2
     ;;
     "fast-build")
-        fast_build
+        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
+            echo "Usage: mcserver fast-build [version]"
+            echo "    1. Check and install JRE and screen"
+            echo "    2. Update server.jar file to specified version. (Default: latest)"
+            echo "    3. Start server"
+            exit 0
+        fi
+        fast_build $2
+    ;;
+    "env")
+        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
+            echo "Usage: mcserver env [version]"
+            echo "    Check and install JRE and screen"
+            exit 0
+        fi
+        get_env $2
     ;;
     "--help" | "-h")
         echo "Usage: ./get-server-file [options...]"
@@ -182,8 +273,12 @@ case $1 in
         echo "        Start Minecraft server"
         echo "    screen"
         echo "        Attach to screen session 'mc'"
+        echo "    update"
+        echo "        Update server.jar file to specified version. (Default: latest)"
         echo "    fast-build"
         echo "        Fast build on a new server"
+        echo "    env"
+        echo "        Check and install JRE and screen"
         exit 0
     ;;
     *)
