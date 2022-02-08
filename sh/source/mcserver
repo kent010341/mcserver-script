@@ -1,12 +1,18 @@
 #!/bin/bash
 
-# return 0 if is inside a screen session, if not, 1.
+##
+# Check if the terminal is attaching to a screen session.
+# If not attaching to a session, and there's no any session called 'mc', create one.
+# return: 
+#     0: if is attaching
+#     1: not attaching
+##
 function check_screen() {
     if [ $STY != "" ]; then
-        echo -e "\033[1;96m[INFO] You're in a screen session ($STY). \033[0m"
+        echo -e "\033[1;96m[INFO] You're attaching to a screen session ($STY). \033[0m"
         return 0
     else
-        echo -e "\033[1;96m[INFO] You're not in a screen session. \033[0m"
+        echo -e "\033[1;96m[INFO] You're not attaching to a screen session. \033[0m"
         if [ $(screen -list | grep ".mc") == "" ]; then
             echo -e "\033[1;96m[INFO] There's no screen session called 'mc'. Create one. \033[0m"
             screen -dmS mc
@@ -15,15 +21,27 @@ function check_screen() {
     fi
 }
 
+##
+# Check if a file is exist
+# Parameter:
+#     $1: file path
+# Return:
+#     0: exist
+#     1: doesn't exist
+##
 function check_file() {
     path=$1
     if [ -f $path ]; then
-        return 1
-    else
         return 0
+    else
+        return 1
     fi
 }
 
+##
+# Check if current user has write permission in current directory.
+# Exit while doesn't have write permission. (exit code: 1)
+##
 function check_write_permission() {
     if [ ! -w . ]; then
         echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this directory ($(pwd)). Try using 'sudo' or change to another user. \033[0m"
@@ -31,12 +49,18 @@ function check_write_permission() {
     fi
 }
 
+##
+# Start the server.
+# Parameter:
+#     $1: server.jar file path
+#     $2: RAM used for the server (in GB) 
+##
 function start() {
     file_path=$1
     mb=$(expr $2 \* 1024)M
 
     check_file $file_path
-    if [ ! $? -eq 0 ]; then
+    if [ ! $? -eq 1 ]; then
         echo -e "\033[1;91m[ERROR] No such file called $file_path \033[0m"
         exit 1
     fi
@@ -50,10 +74,18 @@ function start() {
     fi
 }
 
+##
+# Stop the server.
+##
 function stop() {
     screen -r mc -X stuff "stop\n"
 }
 
+##
+# Update the server.jar version.
+# Parameter:
+#     $1: version (default: latest)
+##
 function update() {
     check_write_permission
 
@@ -87,6 +119,9 @@ function update() {
     fi
 }
 
+##
+# Download server.jar and start the server.
+##
 function fast_build() {
     update
     start
