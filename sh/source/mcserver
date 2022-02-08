@@ -1,289 +1,327 @@
 #!/bin/bash
 
-##
-# Check if the terminal is attaching to a screen session.
-# If not attaching to a session, and there's no any session called 'mc', create one.
-# return: 
-#     0: if is attaching
-#     1: not attaching
-##
-function check_screen() {
-    if [ $STY != "" ]; then
-        echo -e "\033[1;96m[INFO] You're attaching to a screen session ($STY). \033[0m"
-        return 0
-    else
-        echo -e "\033[1;96m[INFO] You're not attaching to a screen session. \033[0m"
-        if [ $(screen -list | grep ".mc") == "" ]; then
-            echo -e "\033[1;96m[INFO] There's no screen session called 'mc'. Create one. \033[0m"
-            screen -dmS mc
-        fi
-        return 1
-    fi
-}
+function mcserver() {
+    case $1 in
+        "start")
+            memory=2
+            filename="./server.jar"
 
-##
-# Check if a file is exist
-# Parameter:
-#     $1: file path
-# Return:
-#     0: exist
-#     1: doesn't exist
-##
-function check_file() {
-    path=$1
-    if [ -f $path ]; then
-        return 0
-    else
-        return 1
-    fi
-}
+            shift
+            while (($#)); do
+                case $1 in
+                    "--memory" | "-m")
+                        shift
+                        memory=$1
+                        shift
+                    ;;
+                    "--filename" | "-f")
+                        shift
+                        filename=$1
+                        shift
+                    ;;
+                    "--help" | "-h")
+                        echo "Usage: mcserver start [options...]"
+                        echo "    --memory <memory>, -m <memory>"
+                        echo "        RAM used for the server (in GB)"
+                        echo "    --filename <file name>, -f <file name>"
+                        echo "        The file name of server.jar"
+                        exit 0
+                    ;;
+                    *)
+                        echo "unknown argument '$1'"
+                        echo "Use --help (or -h) to get the usage information."
+                        exit 1
+                    ;;
+                esac
+            done
 
-##
-# Check if current user has write permission in current directory.
-# Exit while doesn't have write permission. (exit code: 1)
-##
-function check_write_permission() {
-    if [ ! -w . ]; then
-        echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this directory ($(pwd)). Try using 'sudo' or change to another user. \033[0m"
-        exit 1
-    fi
-}
+            mb=$(expr $memory \* 1024)M
 
-##
-# Start the server.
-# Parameter:
-#     $1: server.jar file path
-#     $2: RAM used for the server (in GB) 
-##
-function start() {
-    file_path=$1
-    mb=$(expr $2 \* 1024)M
+            if [ ! -f $filename ]; then
+                echo -e "\033[1;91m[ERROR] No such file called $filename \033[0m"
+                exit 1
+            fi
 
-    check_file $file_path
-    if [ ! $? -eq 1 ]; then
-        echo -e "\033[1;91m[ERROR] No such file called $file_path \033[0m"
-        exit 1
-    fi
+            if [ $STY != "" ]; then
+                echo -e "\033[1;96m[INFO] You're attaching to a screen session ($STY). \033[0m"
+                java -Xmx$mb -Xms$mb -jar $filename nogui
+            else
+                echo -e "\033[1;96m[INFO] You're not attaching to a screen session. \033[0m"
+                if [ $(screen -list | grep ".mc") == "" ]; then
+                    echo -e "\033[1;96m[INFO] There's no screen session called 'mc'. Create one. \033[0m"
+                    screen -dmS mc
+                fi
+                screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
+            fi
+        ;;
+        "stop")
+            shift
+            if [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
+                echo "Usage: mcserver stop"
+                echo "    Stop the server"
+                exit 0
+            fi
+            screen -r mc -X stuff "stop\n"
+        ;;
+        "screen")
+            shift
+            if [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
+                echo "Usage: mcserver screen"
+                echo "    Attach to screen session 'mc'"
+                exit 0
+            fi
+            if [ $STY != "" ]; then
+                echo -e "\033[1;96m[INFO] You're attaching to a screen session ($STY). \033[0m"
+            else
+                echo -e "\033[1;96m[INFO] You're not attaching to a screen session. \033[0m"
+                if [ $(screen -list | grep ".mc") == "" ]; then
+                    echo -e "\033[1;96m[INFO] There's no screen session called 'mc'. Create one. \033[0m"
+                    screen -S mc
+                else
+                    screen -r mc
+                fi
+            fi
+        ;;
+        "update")
+            shift
+            if [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
+                echo "Usage: mcserver update [version]"
+                echo "    Update server.jar file to specified version. (Default: latest)"
+                exit 0
+            fi
+            
+            # check write permission
+            if [ ! -w . ]; then
+                echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this directory ($(pwd)). Try using 'sudo' or change to another user. \033[0m"
+                exit 1
+            fi
 
-    check_screen
+            version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+            response=$(curl --silent $version_file_url)
 
-    if [ $? -eq 0 ]; then
-        java -Xmx$mb -Xms$mb -jar $file_path nogui
-    else
-        screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $file_path nogui\n"
-    fi
-}
+            version=$1
+            if [ $version == "" ]; then
+                version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
+            fi
 
-##
-# Stop the server.
-##
-function stop() {
-    screen -r mc -X stuff "stop\n"
-}
+            if [ -f "./server.jar" ]; then
+                echo -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
+                rm ./server.jar
+            fi
 
-##
-# Update the server.jar version.
-# Parameter:
-#     $1: version (default: latest)
-##
-function update() {
-    check_write_permission
+            version_hash_key=$(echo "$response" | grep "$version=" | cut -d">" -f 2)
+            
+            if [ "$version_hash_key" == "" ]; then
+                echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
+                exit 1
+            fi
 
-    version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
-    response=$(curl --silent $version_file_url)
+            url="https://launcher.mojang.com/v1/objects/$version_hash_key/server.jar"
 
-    version=$1
-    if [ $version == "" ]; then
-        version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
-    fi
+            curl $url --silent -o ./server.jar
+            if [ $? -eq 0 ]; then
+                echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
+            else
+                echo -e "\033[1;91m[ERROR] Download server.jar failed. \033[0m"
+            fi
+        ;;
+        "fast-build")
+            shift
+            if [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
+                echo "Usage: mcserver fast-build [version]"
+                echo "    1. Check and install JRE and screen"
+                echo "    2. Update server.jar file to specified version. (Default: latest)"
+                echo "    3. Start server"
+                exit 0
+            fi
 
-    if [ -f "./server.jar" ]; then
-        echo -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
-        rm ./server.jar
-    fi
+            # env =============
+            # check Java version
+            echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
+            java -version
 
-    version_hash_key=$(echo "$response" | grep "$version=" | cut -d">" -f 2)
-    
-    if [ "$version_hash_key" == "" ]; then
-        echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
-        exit 1
-    fi
+            # if the command above execute failed, download the latest version of JDK
+            if [ $? -eq 0 ]; then
+                echo -e "\033[1;96m[INFO] Java is installed. \033[0m"
+            else
+                version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+                response=$(curl --silent $version_file_url)
 
-    url="https://launcher.mojang.com/v1/objects/$version_hash_key/server.jar"
+                version=$1
+                if [ $version == "" ]; then
+                    version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
+                fi
 
-    curl $url --silent -o ./server.jar
-    if [ $? -eq 0 ]; then
-        echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
-    else
-        echo -e "\033[1;91m[ERROR] Download server.jar failed. \033[0m"
-    fi
-}
+                version_2digit=$(echo "$response" | grep "$version=" | cut -d"." -f 2)
 
-##
-# Download server.jar and start the server.
-##
-function fast_build() {
-    get_env $1
-    update $1
-    start
-}
+                if [ $version_2digit -ge 17 ]; then
+                    jre_version=17
+                else
+                    jre_version=8
+                fi
+                sudo apt-get install "openjdk-$jre_version-jre" -y
 
-##
-# Check and install java and screen
-# Parameter:
-#     $1: Minecraft version (default: latest)
-##
-function get_env() {
-    check_write_permission
-
-    # check Java version
-    echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
-    java -version
-
-    # if the command above execute failed, download the latest version of JDK
-    if [ $? -eq 0 ]; then
-        echo -e "\033[1;96m[INFO] Java is installed. \033[0m"
-    else
-        version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
-        response=$(curl --silent $version_file_url)
-
-        version=$1
-        if [ $version == "" ]; then
-            version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
-        fi
-
-        version=$(echo "$response" | grep "$version=" | cut -d"." -f 2)
-
-        if [ $version -ge 17 ]; then
-            jre_version=17
-        else
-            jre_version=8
-        fi
-        sudo apt-get install "openjdk-$jre_version-jre" -y
-
-        if [ $? -eq 0 ]; then
-            echo -e "\033[1;93m[SUCCESS] Java$jre_version installed successfully. \033[0m"
-        else
-            echo -e "\033[1;91m[ERROR] Java$jre_version installed failed. \033[0m"
-            exit 1
-        fi
-    fi
-
-    # check screen installed
-    echo -e "\033[1;96m[INFO] Checking screen... \033[0m"
-    screen -version
-
-    # if the command above execute failed, install screen
-    if [ $? -eq 0 ] || [ $? -eq 1 ]; then
-        echo -e "\033[1;96m[INFO] screen is installed. \033[0m"
-    else
-        echo -e "\033[1;96m[INFO] screen isn't installed. Start installing... \033[0m"
-        sudo apt-get install screen -y 
-        if [ $? -eq 0 ]; then
-            echo -e "\033[1;93m[SUCCESS] screen installed successfully. \033[0m"
-        else
-            echo -e "\033[1;91m[ERROR] screen installed failed. \033[0m"
-            exit 1
-        fi
-    fi
-}
-
-case $1 in
-    "start")
-        memory=2
-        filename="./server.jar"
-        while (($#)); do
-            case $2 in
-                "--memory" | "-m")
-                    shift
-                    memory=$2
-                    shift
-                ;;
-                "--filename" | "-f")
-                    shift
-                    filename=$2
-                    shift
-                ;;
-                "--help" | "-h")
-                    echo "Usage: mcserver start [options...]"
-                    echo "    --memory <memory>, -m <memory>"
-                    echo "        RAM used for the server (in GB)"
-                    echo "    --filename <file name>, -f <file name>"
-                    echo "        The file name of server.jar"
-                    exit 0
-                ;;
-                *)
-                    echo "unknown argument '$2'"
-                    echo "Use --help (or -h) to get the usage information."
+                if [ $? -eq 0 ]; then
+                    echo -e "\033[1;93m[SUCCESS] Java$jre_version installed successfully. \033[0m"
+                else
+                    echo -e "\033[1;91m[ERROR] Java$jre_version installed failed. \033[0m"
                     exit 1
-                ;;
-            esac
-        done
+                fi
+            fi
 
-        start $filename $memory
-    ;;
-    "stop")
-        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
-            echo "Usage: mcserver stop"
-            echo "    Stop the server"
+            # check screen installed
+            echo -e "\033[1;96m[INFO] Checking screen... \033[0m"
+            screen -version
+
+            # if the command above execute failed, install screen
+            if [ $? -eq 0 ] || [ $? -eq 1 ]; then
+                echo -e "\033[1;96m[INFO] screen is installed. \033[0m"
+            else
+                echo -e "\033[1;96m[INFO] screen isn't installed. Start installing... \033[0m"
+                sudo apt-get install screen -y 
+                if [ $? -eq 0 ]; then
+                    echo -e "\033[1;93m[SUCCESS] screen installed successfully. \033[0m"
+                else
+                    echo -e "\033[1;91m[ERROR] screen installed failed. \033[0m"
+                    exit 1
+                fi
+            fi
+
+            # update ===============
+            # check write permission
+            if [ ! -w . ]; then
+                echo -e "\033[1;91m[ERROR] Current user doesn't have 'write' permission at this directory ($(pwd)). Try using 'sudo' or change to another user. \033[0m"
+                exit 1
+            fi
+
+            version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+            response=$(curl --silent $version_file_url)
+
+            if [ $version == "" ]; then
+                version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
+            fi
+
+            if [ -f "./server.jar" ]; then
+                echo -e "\033[1;96m[INFO] A server.jar has already exist, removing it. \033[0m"
+                rm ./server.jar
+            fi
+
+            version_hash_key=$(echo "$response" | grep "$version=" | cut -d">" -f 2)
+            
+            if [ "$version_hash_key" == "" ]; then
+                echo -e "\033[1;91m[ERROR] Unsupported version. \033[0m"
+                exit 1
+            fi
+
+            url="https://launcher.mojang.com/v1/objects/$version_hash_key/server.jar"
+
+            curl $url --silent -o ./server.jar
+            if [ $? -eq 0 ]; then
+                echo -e "\033[1;93m[SUCCESS] server.jar already downloaded. \033[0m"
+            else
+                echo -e "\033[1;91m[ERROR] Download server.jar failed. \033[0m"
+            fi
+
+            # start ==============
+            mb=2048M
+            filename="./server.jar"
+
+            if [ ! -f $filename ]; then
+                echo -e "\033[1;91m[ERROR] No such file called $filename \033[0m"
+                exit 1
+            fi
+
+            if [ $STY != "" ]; then
+                echo -e "\033[1;96m[INFO] You're attaching to a screen session ($STY). \033[0m"
+                java -Xmx$mb -Xms$mb -jar $filename nogui
+            else
+                echo -e "\033[1;96m[INFO] You're not attaching to a screen session. \033[0m"
+                if [ $(screen -list | grep ".mc") == "" ]; then
+                    echo -e "\033[1;96m[INFO] There's no screen session called 'mc'. Create one. \033[0m"
+                    screen -dmS mc
+                fi
+                screen -r mc -X stuff "java -Xmx$mb -Xms$mb -jar $filename nogui\n"
+            fi
+        ;;
+        "env")
+            shift
+            if [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
+                echo "Usage: mcserver env [version]"
+                echo "    Check and install JRE and screen"
+                exit 0
+            fi
+
+            # check Java version
+            echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
+            java -version
+
+            # if the command above execute failed, download the latest version of JDK
+            if [ $? -eq 0 ]; then
+                echo -e "\033[1;96m[INFO] Java is installed. \033[0m"
+            else
+                version_file_url="https://raw.githubusercontent.com/kent010341/mcserver-script/master/sh/source/version-hash.txt"
+                response=$(curl --silent $version_file_url)
+
+                version=$1
+                if [ $version == "" ]; then
+                    version=$(echo "$response" | grep "latest=" | cut -d">" -f 2)
+                fi
+
+                version=$(echo "$response" | grep "$version=" | cut -d"." -f 2)
+
+                if [ $version -ge 17 ]; then
+                    jre_version=17
+                else
+                    jre_version=8
+                fi
+                sudo apt-get install "openjdk-$jre_version-jre" -y
+
+                if [ $? -eq 0 ]; then
+                    echo -e "\033[1;93m[SUCCESS] Java$jre_version installed successfully. \033[0m"
+                else
+                    echo -e "\033[1;91m[ERROR] Java$jre_version installed failed. \033[0m"
+                    exit 1
+                fi
+            fi
+
+            # check screen installed
+            echo -e "\033[1;96m[INFO] Checking screen... \033[0m"
+            screen -version
+
+            # if the command above execute failed, install screen
+            if [ $? -eq 0 ] || [ $? -eq 1 ]; then
+                echo -e "\033[1;96m[INFO] screen is installed. \033[0m"
+            else
+                echo -e "\033[1;96m[INFO] screen isn't installed. Start installing... \033[0m"
+                sudo apt-get install screen -y 
+                if [ $? -eq 0 ]; then
+                    echo -e "\033[1;93m[SUCCESS] screen installed successfully. \033[0m"
+                else
+                    echo -e "\033[1;91m[ERROR] screen installed failed. \033[0m"
+                    exit 1
+                fi
+            fi
+        ;;
+        "--help" | "-h")
+            echo "Usage: ./get-server-file [options...]"
+            echo "    start"    
+            echo "        Start Minecraft server"
+            echo "    stop"
+            echo "        Start Minecraft server"
+            echo "    screen"
+            echo "        Attach to screen session 'mc'"
+            echo "    update"
+            echo "        Update server.jar file to specified version. (Default: latest)"
+            echo "    fast-build"
+            echo "        Fast build on a new server"
+            echo "    env"
+            echo "        Check and install JRE and screen"
             exit 0
-        fi
-        stop
-    ;;
-    "screen")
-        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
-            echo "Usage: mcserver screen"
-            echo "    Attach to screen session 'mc'"
-            exit 0
-        fi
-        check_screen
-        screen -r mc
-    ;;
-    "update")
-        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
-            echo "Usage: mcserver update [version]"
-            echo "    Update server.jar file to specified version. (Default: latest)"
-            exit 0
-        fi
-        update $2
-    ;;
-    "fast-build")
-        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
-            echo "Usage: mcserver fast-build [version]"
-            echo "    1. Check and install JRE and screen"
-            echo "    2. Update server.jar file to specified version. (Default: latest)"
-            echo "    3. Start server"
-            exit 0
-        fi
-        fast_build $2
-    ;;
-    "env")
-        if [ $2 == '--help' ] || [ $2 == '-h' ]; then
-            echo "Usage: mcserver env [version]"
-            echo "    Check and install JRE and screen"
-            exit 0
-        fi
-        get_env $2
-    ;;
-    "--help" | "-h")
-        echo "Usage: ./get-server-file [options...]"
-        echo "    start"    
-        echo "        Start Minecraft server"
-        echo "    stop"
-        echo "        Start Minecraft server"
-        echo "    screen"
-        echo "        Attach to screen session 'mc'"
-        echo "    update"
-        echo "        Update server.jar file to specified version. (Default: latest)"
-        echo "    fast-build"
-        echo "        Fast build on a new server"
-        echo "    env"
-        echo "        Check and install JRE and screen"
-        exit 0
-    ;;
-    *)
-        echo "unknown argument '$1'"
-        echo "Use --help (or -h) to get the usage information."
-        exit 1
-    ;;
-esac
+        ;;
+        *)
+            echo "unknown argument '$1'"
+            echo "Use --help (or -h) to get the usage information."
+            exit 1
+        ;;
+    esac    
+}
