@@ -43,7 +43,7 @@ done
 
 #======================================================
 # check screen installed
-screen -version
+screen -version > /dev/null
 
 # if the command above execute failed, install screen
 if [ ! $? -eq 1 ] && [ ! $? -eq 0 ]; then
@@ -76,7 +76,7 @@ mb=$(expr $gb \* 1024)M
 filename=$default_filename
 
 # test screen session "mc" exist
-screen -r mc -X stuff "echo test\n"
+screen -r mc -X stuff "echo test\n" > /dev/null
 
 # if the command above execute failed, create a detached screen
 if [ ! $? -eq 0 ]; then

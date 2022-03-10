@@ -35,7 +35,7 @@ fi
 
 # check Java version
 echo -e "\033[1;96m[INFO] Checking Java... \033[0m"
-java -version
+java -version > /dev/null
 
 # if the command above execute failed, download the latest version of JDK
 if [ $? -eq 0 ]; then
@@ -56,7 +56,7 @@ if [ $noscreen -eq 1 ]; then
 else
     # check screen installed
     echo -e "\033[1;96m[INFO] Checking screen... \033[0m"
-    screen -version
+    screen -version > /dev/null
 
     # if the command above execute failed, install screen
     if [ $? -eq 0 ] || [ $? -eq 1 ]; then
