@@ -43,7 +43,7 @@ done
 
 #======================================================
 # test screen session "mc" exist
-screen -r mc -X stuff "/say Server will be closed in 10 seconds. Restart after the backup process completed (usually less than 1 minute).\n"
+screen -r mc -X stuff "/say Server will be closed in 10 seconds. Restart after the backup process completed (usually less than 1 minute).\n" > /dev/null
 
 # if the command above execute failed, send error message and quit
 if [ ! $? -eq 0 ]; then
